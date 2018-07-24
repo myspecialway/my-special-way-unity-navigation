@@ -1,0 +1,163 @@
+fileFormatVersion: 2
+guid: 2c21c176e329adb4096bde5cc32556a0
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: Andy
+    100002: Andy_1
+    100004: Andy_GEO
+    100006: AndyBlobShadow
+    100008: AndyBlobShadow_GEO
+    100010: //RootNode
+    100012: pCube1
+    100014: pCube2
+    100016: pCube3
+    100018: pCube4
+    100020: pCube5
+    100022: pPlane1
+    100024: Andy_GEO1
+    100026: Andy_GEO2
+    100028: CoinNote:Coin:Mesh
+    100030: redRobot:RedRobot:Mesh
+    400000: Andy
+    400002: Andy_1
+    400004: Andy_GEO
+    400006: AndyBlobShadow
+    400008: AndyBlobShadow_GEO
+    400010: //RootNode
+    400012: pCube1
+    400014: pCube2
+    400016: pCube3
+    400018: pCube4
+    400020: pCube5
+    400022: pPlane1
+    400024: Andy_GEO1
+    400026: Andy_GEO2
+    400028: CoinNote:Coin:Mesh
+    400030: redRobot:RedRobot:Mesh
+    2100000: aiStandardSurface1
+    2100002: lambert1
+    2100004: AndyShadowMaterial
+    2100006: AndyMaterial
+    2100008: CoinNote_Coin_phong1SG1
+    2100010: redRobot_RedRobot_Robot_0321_032Gray1
+    2100012: redRobot_RedRobot_Robot_0321_032Steel1
+    2100014: redRobot_RedRobot_Robot_0321_032Black1
+    2100016: redRobot_RedRobot_Robot_0322
+    2300000: Andy_GEO
+    2300002: AndyBlobShadow_GEO
+    2300004: pCube1
+    2300006: pCube2
+    2300008: pCube3
+    2300010: pCube4
+    2300012: pCube5
+    2300014: pPlane1
+    2300016: Andy_GEO1
+    2300018: Andy_GEO2
+    2300020: CoinNote:Coin:Mesh
+    2300022: redRobot:RedRobot:Mesh
+    3300000: Andy_GEO
+    3300002: AndyBlobShadow_GEO
+    3300004: pCube1
+    3300006: pCube2
+    3300008: pCube3
+    3300010: pCube4
+    3300012: pCube5
+    3300014: pPlane1
+    3300016: Andy_GEO1
+    3300018: Andy_GEO2
+    3300020: CoinNote:Coin:Mesh
+    3300022: redRobot:RedRobot:Mesh
+    4300000: pPlane1
+    4300002: pCube1
+    4300004: pCube2
+    4300006: pCube3
+    4300008: pCube4
+    4300010: pCube5
+    4300012: AndyBlobShadow_GEO
+    4300014: Andy_GEO
+    4300016: Andy_GEO1
+    4300018: Andy_GEO2
+    4300020: CoinNote:Coin:Mesh
+    4300022: redRobot:RedRobot:Mesh
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
