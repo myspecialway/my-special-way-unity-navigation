@@ -418,7 +418,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -92}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &732595306
@@ -532,7 +532,7 @@ MonoBehaviour:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 55
     m_FontStyle: 1
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 0
     m_MaxSize: 157
     m_Alignment: 4
@@ -541,7 +541,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Select destination
+  m_Text: 'Where would you
+
+    like to go?'
 --- !u!222 &862070498
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1049,7 +1051,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2000013466}
         m_MethodName: OnDestinationSelected
-        m_Mode: 3
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1476,12 +1478,12 @@ Prefab:
     - target: {fileID: 224430532690010244, guid: a5df698a14d280b4dadc32e6891587ef,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 481
+      value: 62
       objectReference: {fileID: 0}
     - target: {fileID: 224430532690010244, guid: a5df698a14d280b4dadc32e6891587ef,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -808
+      value: -64
       objectReference: {fileID: 0}
     - target: {fileID: 224430532690010244, guid: a5df698a14d280b4dadc32e6891587ef,
         type: 2}
@@ -1757,6 +1759,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _chooseDestinationPopup: {fileID: 680697581}
   _button: {fileID: 1716362900}
+  _destionationDropdown: {fileID: 1451507098}
   AugmentedImageVisualizerPrefab: {fileID: 114782289781611376, guid: 99fc2ce7089be7b4995db2a4e0cee921,
     type: 2}
   FitToScanOverlay: {fileID: 1622737808}

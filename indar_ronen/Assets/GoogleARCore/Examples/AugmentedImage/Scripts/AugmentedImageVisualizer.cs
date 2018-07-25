@@ -47,6 +47,12 @@ namespace GoogleARCore.Examples.AugmentedImage
         [SerializeField] private GameObject _bToD;
         [SerializeField] private GameObject _dToE;
         
+        [SerializeField] private GameObject _aLetter;
+        [SerializeField] private GameObject _bLetter;
+        [SerializeField] private GameObject _cLetter;
+        [SerializeField] private GameObject _dLetter;
+        [SerializeField] private GameObject _eLetter;
+        
         /// <summary>
         /// The AugmentedImage to visualize.
         /// </summary>
@@ -145,24 +151,48 @@ namespace GoogleARCore.Examples.AugmentedImage
                     _bToC.SetActive(false);
                     _bToD.SetActive(false);
                     _dToE.SetActive(false);
+                    
+                    _aLetter.SetActive(true);
+                    _bLetter.SetActive(true);
+                    _cLetter.SetActive(false);
+                    _dLetter.SetActive(false);
+                    _eLetter.SetActive(false);
                     break;
                 case DestinationType.AtoC:
                     _aToB.SetActive(true);
                     _bToC.SetActive(true);
                     _bToD.SetActive(false);
                     _dToE.SetActive(false);
+                    
+                    _aLetter.SetActive(true);
+                    _bLetter.SetActive(true);
+                    _cLetter.SetActive(true);
+                    _dLetter.SetActive(false);
+                    _eLetter.SetActive(false);
                     break;
                 case DestinationType.AtoD:
                     _aToB.SetActive(true);
                     _bToC.SetActive(false);
                     _bToD.SetActive(true);
                     _dToE.SetActive(false);
+                    
+                    _aLetter.SetActive(true);
+                    _bLetter.SetActive(true);
+                    _cLetter.SetActive(false);
+                    _dLetter.SetActive(true);
+                    _eLetter.SetActive(false);
                     break;
                 case DestinationType.AtoE:
                     _aToB.SetActive(true);
                     _bToC.SetActive(false);
                     _bToD.SetActive(true);
                     _dToE.SetActive(true);
+                    
+                    _aLetter.SetActive(true);
+                    _bLetter.SetActive(true);
+                    _cLetter.SetActive(false);
+                    _dLetter.SetActive(true);
+                    _eLetter.SetActive(true);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

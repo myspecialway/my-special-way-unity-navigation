@@ -33,6 +33,7 @@ namespace GoogleARCore.Examples.AugmentedImage
     {
         [SerializeField] private GameObject _chooseDestinationPopup;
         [SerializeField] private GameObject _button;        
+        [SerializeField] private Dropdown _destionationDropdown;        
         
         public static string[] DestionationOptions = {"AB", "AC", "AD", "AE"};
 
@@ -135,8 +136,9 @@ namespace GoogleARCore.Examples.AugmentedImage
         }
 
 
-        public void OnDestinationSelected(int destination)
+        public void OnDestinationSelected()
         {
+            var destination = _destionationDropdown.value;
             OnDestinationSelected(DestionationOptions[destination]);
         }
 
