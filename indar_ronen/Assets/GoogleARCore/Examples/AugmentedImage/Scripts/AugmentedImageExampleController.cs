@@ -31,6 +31,11 @@ namespace GoogleARCore.Examples.AugmentedImage
     /// </summary>
     public class AugmentedImageExampleController : MonoBehaviour
     {
+        [SerializeField] private GameObject _chooseDestinationPopup;
+        [SerializeField] private GameObject _button;        
+        
+        public static string[] DestionationOptions = {"AB", "AC", "AD", "AE"};
+
         /// <summary>
         /// A prefab for visualizing an AugmentedImage.
         /// </summary>
@@ -98,6 +103,12 @@ namespace GoogleARCore.Examples.AugmentedImage
                 }
             }
 
+            if (_chooseDestinationPopup.activeInHierarchy)
+            {
+                FitToScanOverlay.SetActive(false);
+                return;
+            }
+
             FitToScanOverlay.SetActive(true);
         }
 
@@ -118,6 +129,20 @@ namespace GoogleARCore.Examples.AugmentedImage
                     AugmentedImageVisualizer.CurrentDestination = DestinationType.AtoE;
                     break;
             }
+            
+            Destroy(GameObject.Find("Dropdown List"));            
+            _chooseDestinationPopup.SetActive(false);
+        }
+
+
+        public void OnDestinationSelected(int destination)
+        {
+            OnDestinationSelected(DestionationOptions[destination]);
+        }
+
+        public void OnDestinationButtonClicked()
+        {
+            _chooseDestinationPopup.SetActive(true);
         }
     }
 }
