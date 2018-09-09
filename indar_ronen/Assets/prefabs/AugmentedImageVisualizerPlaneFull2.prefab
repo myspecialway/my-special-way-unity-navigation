@@ -2688,7 +2688,7 @@ GameObject:
   - component: {fileID: 114098614877519180}
   - component: {fileID: 195573747348649740}
   m_Layer: 0
-  m_Name: Cylinder
+  m_Name: NavigationAgent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7082,6 +7082,7 @@ GameObject:
   - component: {fileID: 4245141458745788}
   - component: {fileID: 95733139722303670}
   - component: {fileID: 114751245109156878}
+  - component: {fileID: 114137150695949448}
   m_Layer: 0
   m_Name: AugmentedImageVisualizerPlaneFull2
   m_TagString: Untagged
@@ -24923,9 +24924,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83744d0acf95e2042961261f21ca9e6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  goal: {fileID: 4584747980707800}
-  agent: {fileID: 0}
-  timeScale: 20
+  agent: {fileID: 195573747348649740}
+  timeScale: 1
+--- !u!114 &114137150695949448
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1952181333061670}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7ca59c1b552bca46b466a082acce214, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nav: {fileID: 114098614877519180}
+  destName: H
 --- !u!114 &114751245109156878
 MonoBehaviour:
   m_ObjectHideFlags: 1
