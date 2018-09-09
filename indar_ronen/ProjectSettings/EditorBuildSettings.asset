@@ -5,7 +5,10 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/AugImgTestV5.unity
     guid: a1ac81687e5ed6a4189d05b2478318b9
+  - enabled: 1
+    path: Assets/Scenes/AugImgTestFullWallV1.unity
+    guid: 7c0f3268055051a479b18ae02a37516b
   m_configObjects: {}
