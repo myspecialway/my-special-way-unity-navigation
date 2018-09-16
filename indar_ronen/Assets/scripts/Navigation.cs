@@ -74,6 +74,7 @@ public class Navigation : MonoBehaviour {
 
 	private void DestinationReached()
 	{
+		agent.ResetPath();
 		Time.timeScale = 1;
 		ShowPath();
 		inProgress = false;

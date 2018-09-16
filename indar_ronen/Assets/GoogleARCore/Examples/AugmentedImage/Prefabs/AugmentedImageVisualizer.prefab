@@ -293,7 +293,6 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
-  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 457696d2cf54b4f558c12777332919a2, type: 2}
   m_StaticBatchInfo:
@@ -328,7 +327,6 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
-  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 457696d2cf54b4f558c12777332919a2, type: 2}
   m_StaticBatchInfo:
@@ -363,7 +361,6 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
-  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 457696d2cf54b4f558c12777332919a2, type: 2}
   m_StaticBatchInfo:
@@ -398,7 +395,6 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
-  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 457696d2cf54b4f558c12777332919a2, type: 2}
   m_StaticBatchInfo:
@@ -459,8 +455,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 655793353707240a195aee929b80d41a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ImageCenterPoseAnchor: {fileID: 0}
   FrameLowerLeft: {fileID: 1701912229405494}
   FrameLowerRight: {fileID: 1182182374406134}
-  FrameUpperLeft: {fileID: 1410765919511238, guid: 3a9193a385621ad419d1cc5652a8f3fd,
-    type: 2}
+  FrameUpperLeft: {fileID: 1308591232281908}
   FrameUpperRight: {fileID: 1464705413935860}
