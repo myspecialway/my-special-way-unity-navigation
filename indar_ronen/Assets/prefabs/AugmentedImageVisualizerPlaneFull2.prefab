@@ -91,7 +91,7 @@ GameObject:
   - component: {fileID: 64046422568662228}
   m_Layer: 0
   m_Name: MA
-  m_TagString: paths
+  m_TagString: Path
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -220,7 +220,7 @@ GameObject:
   - component: {fileID: 64807555225124024}
   m_Layer: 0
   m_Name: AB
-  m_TagString: paths
+  m_TagString: Path
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -498,7 +498,7 @@ GameObject:
   - component: {fileID: 64650490526373884}
   m_Layer: 0
   m_Name: IM
-  m_TagString: paths
+  m_TagString: Path
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -941,7 +941,7 @@ GameObject:
   - component: {fileID: 64358432983577562}
   m_Layer: 0
   m_Name: FC
-  m_TagString: paths
+  m_TagString: Path
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1071,7 +1071,7 @@ GameObject:
   - component: {fileID: 135431094901893112}
   m_Layer: 0
   m_Name: L
-  m_TagString: Untagged
+  m_TagString: Waypoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1185,7 +1185,7 @@ GameObject:
   - component: {fileID: 64617814934712078}
   m_Layer: 0
   m_Name: HF
-  m_TagString: paths
+  m_TagString: Path
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1288,7 +1288,7 @@ GameObject:
   - component: {fileID: 64771464325929826}
   m_Layer: 0
   m_Name: BC
-  m_TagString: paths
+  m_TagString: Path
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1700,7 +1700,7 @@ GameObject:
   - component: {fileID: 64093781404252762}
   m_Layer: 0
   m_Name: LM
-  m_TagString: paths
+  m_TagString: Path
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1896,7 +1896,7 @@ GameObject:
   - component: {fileID: 135137187469720064}
   m_Layer: 0
   m_Name: F
-  m_TagString: Untagged
+  m_TagString: Waypoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2008,7 +2008,7 @@ GameObject:
   - component: {fileID: 64944981266155104}
   m_Layer: 0
   m_Name: LK
-  m_TagString: paths
+  m_TagString: Path
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2106,7 +2106,7 @@ GameObject:
   - component: {fileID: 64621869151176246}
   m_Layer: 0
   m_Name: JK
-  m_TagString: paths
+  m_TagString: Path
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2124,7 +2124,7 @@ GameObject:
   - component: {fileID: 64790358842609850}
   m_Layer: 0
   m_Name: KL
-  m_TagString: paths
+  m_TagString: Path
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2304,7 +2304,7 @@ GameObject:
   - component: {fileID: 64119824594552754}
   m_Layer: 0
   m_Name: AM
-  m_TagString: paths
+  m_TagString: Path
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2337,7 +2337,7 @@ GameObject:
   - component: {fileID: 64944563984978408}
   m_Layer: 0
   m_Name: CF
-  m_TagString: paths
+  m_TagString: Path
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2434,7 +2434,7 @@ GameObject:
   - component: {fileID: 135890560011867642}
   m_Layer: 0
   m_Name: C
-  m_TagString: Untagged
+  m_TagString: Waypoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2452,7 +2452,7 @@ GameObject:
   - component: {fileID: 64174342849902496}
   m_Layer: 0
   m_Name: JI
-  m_TagString: paths
+  m_TagString: Path
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2570,7 +2570,7 @@ GameObject:
   - component: {fileID: 64461875252101488}
   m_Layer: 0
   m_Name: KJ
-  m_TagString: paths
+  m_TagString: Path
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2716,7 +2716,7 @@ GameObject:
   - component: {fileID: 135122988490776520}
   m_Layer: 0
   m_Name: I
-  m_TagString: Untagged
+  m_TagString: Waypoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3278,7 +3278,7 @@ GameObject:
   - component: {fileID: 135976361392443880}
   m_Layer: 0
   m_Name: M
-  m_TagString: Untagged
+  m_TagString: Waypoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3378,7 +3378,7 @@ GameObject:
   - component: {fileID: 64591006839184666}
   m_Layer: 0
   m_Name: MI
-  m_TagString: paths
+  m_TagString: Path
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3494,7 +3494,7 @@ GameObject:
   - component: {fileID: 64207733675086634}
   m_Layer: 0
   m_Name: FH
-  m_TagString: paths
+  m_TagString: Path
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3561,7 +3561,7 @@ GameObject:
   - component: {fileID: 64061874333290204}
   m_Layer: 0
   m_Name: BA
-  m_TagString: paths
+  m_TagString: Path
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3805,7 +3805,7 @@ GameObject:
   - component: {fileID: 64414180231751256}
   m_Layer: 0
   m_Name: IH
-  m_TagString: paths
+  m_TagString: Path
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4391,7 +4391,7 @@ GameObject:
   - component: {fileID: 64127347447322402}
   m_Layer: 0
   m_Name: IJ
-  m_TagString: paths
+  m_TagString: Path
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4568,7 +4568,7 @@ GameObject:
   - component: {fileID: 64947515901305062}
   m_Layer: 0
   m_Name: BH
-  m_TagString: paths
+  m_TagString: Path
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4635,7 +4635,7 @@ GameObject:
   - component: {fileID: 64610724911761872}
   m_Layer: 0
   m_Name: HI
-  m_TagString: paths
+  m_TagString: Path
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4958,7 +4958,7 @@ GameObject:
   - component: {fileID: 135530830335125968}
   m_Layer: 0
   m_Name: D
-  m_TagString: Untagged
+  m_TagString: Waypoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5352,7 +5352,7 @@ GameObject:
   - component: {fileID: 135092483687197456}
   m_Layer: 0
   m_Name: A
-  m_TagString: Untagged
+  m_TagString: Waypoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5683,7 +5683,7 @@ GameObject:
   - component: {fileID: 135451963081540690}
   m_Layer: 0
   m_Name: J
-  m_TagString: Untagged
+  m_TagString: Waypoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5787,7 +5787,7 @@ GameObject:
   - component: {fileID: 64164155495094154}
   m_Layer: 0
   m_Name: ML
-  m_TagString: paths
+  m_TagString: Path
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5980,7 +5980,7 @@ GameObject:
   - component: {fileID: 64940629712643952}
   m_Layer: 0
   m_Name: HB
-  m_TagString: paths
+  m_TagString: Path
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6432,7 +6432,7 @@ GameObject:
   - component: {fileID: 64906984820845062}
   m_Layer: 0
   m_Name: CB
-  m_TagString: paths
+  m_TagString: Path
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6805,7 +6805,7 @@ GameObject:
   - component: {fileID: 135029932121237090}
   m_Layer: 0
   m_Name: B
-  m_TagString: Untagged
+  m_TagString: Waypoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6949,7 +6949,7 @@ GameObject:
   - component: {fileID: 64011602432897670}
   m_Layer: 0
   m_Name: DH
-  m_TagString: paths
+  m_TagString: Path
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6965,7 +6965,7 @@ GameObject:
   - component: {fileID: 135609746420001400}
   m_Layer: 0
   m_Name: H
-  m_TagString: Untagged
+  m_TagString: Waypoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7186,7 +7186,7 @@ GameObject:
   - component: {fileID: 135596511428166660}
   m_Layer: 0
   m_Name: K
-  m_TagString: Untagged
+  m_TagString: Waypoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7867,7 +7867,7 @@ Transform:
   m_LocalScale: {x: 0.089999996, y: 1, z: -1.0899999}
   m_Children: []
   m_Father: {fileID: 4245141458745788}
-  m_RootOrder: 25
+  m_RootOrder: 26
   m_LocalEulerAnglesHint: {x: 0, y: 2.78, z: 0.67}
 --- !u!4 &4037445408220066
 Transform:
@@ -8107,7 +8107,7 @@ Transform:
   m_LocalScale: {x: 0.089999996, y: 0.9999999, z: -0.7599999}
   m_Children: []
   m_Father: {fileID: 4245141458745788}
-  m_RootOrder: 22
+  m_RootOrder: 23
   m_LocalEulerAnglesHint: {x: 0, y: -100.9, z: -0.15}
 --- !u!4 &4074471102619886
 Transform:
@@ -8133,7 +8133,7 @@ Transform:
   m_LocalScale: {x: 0.09000001, y: 0.9999999, z: 1}
   m_Children: []
   m_Father: {fileID: 4245141458745788}
-  m_RootOrder: 24
+  m_RootOrder: 25
   m_LocalEulerAnglesHint: {x: 0, y: -1.2, z: 0.51}
 --- !u!4 &4076780571997218
 Transform:
@@ -8375,7 +8375,7 @@ Transform:
   m_LocalScale: {x: 0.089999996, y: 0.9999999, z: 1.3}
   m_Children: []
   m_Father: {fileID: 4245141458745788}
-  m_RootOrder: 29
+  m_RootOrder: 30
   m_LocalEulerAnglesHint: {x: 0, y: 91.47, z: 0.51}
 --- !u!4 &4107784725658908
 Transform:
@@ -8592,7 +8592,7 @@ Transform:
   m_LocalScale: {x: 0.08999998, y: 0.9999999, z: -0.29999998}
   m_Children: []
   m_Father: {fileID: 4245141458745788}
-  m_RootOrder: 26
+  m_RootOrder: 27
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0.51}
 --- !u!4 &4148231071146380
 Transform:
@@ -8789,7 +8789,7 @@ Transform:
   m_LocalScale: {x: 0.089999996, y: 1, z: 0.9999999}
   m_Children: []
   m_Father: {fileID: 4245141458745788}
-  m_RootOrder: 36
+  m_RootOrder: 37
   m_LocalEulerAnglesHint: {x: 0, y: -1.2, z: 0.51}
 --- !u!4 &4172442975179702
 Transform:
@@ -9185,6 +9185,7 @@ Transform:
   - {fileID: 4426654192300610}
   - {fileID: 4664547644585624}
   - {fileID: 4096492042534766}
+  - {fileID: 4584747980707800}
   - {fileID: 4867002801044044}
   - {fileID: 4991641506420142}
   - {fileID: 4780895341615670}
@@ -9209,7 +9210,6 @@ Transform:
   - {fileID: 4270980675102904}
   - {fileID: 4553641848849588}
   - {fileID: 4170279145141560}
-  - {fileID: 4584747980707800}
   - {fileID: 4327965553079322}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -9383,7 +9383,7 @@ Transform:
   m_LocalScale: {x: 0.090000026, y: 0.9999999, z: -0.7600001}
   m_Children: []
   m_Father: {fileID: 4245141458745788}
-  m_RootOrder: 34
+  m_RootOrder: 35
   m_LocalEulerAnglesHint: {x: 0, y: -100.9, z: -0.15}
 --- !u!4 &4273569193538548
 Transform:
@@ -10067,7 +10067,7 @@ Transform:
   m_LocalScale: {x: 0.09000003, y: 1, z: -0.76}
   m_Children: []
   m_Father: {fileID: 4245141458745788}
-  m_RootOrder: 16
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 91.04, z: -0.15}
 --- !u!4 &4387158458383838
 Transform:
@@ -10080,7 +10080,7 @@ Transform:
   m_LocalScale: {x: 0.08999998, y: 1.24, z: -1.1999997}
   m_Children: []
   m_Father: {fileID: 4245141458745788}
-  m_RootOrder: 32
+  m_RootOrder: 33
   m_LocalEulerAnglesHint: {x: 0, y: 90.62, z: 0.51}
 --- !u!4 &4392302955255396
 Transform:
@@ -10289,7 +10289,7 @@ Transform:
   m_LocalScale: {x: 0.08999998, y: 1.24, z: -1.9199995}
   m_Children: []
   m_Father: {fileID: 4245141458745788}
-  m_RootOrder: 31
+  m_RootOrder: 32
   m_LocalEulerAnglesHint: {x: 0, y: 90.62, z: 0.51}
 --- !u!4 &4425911669168126
 Transform:
@@ -10381,7 +10381,7 @@ Transform:
   m_LocalScale: {x: 0.089999996, y: 0.9999999, z: -0.7599999}
   m_Children: []
   m_Father: {fileID: 4245141458745788}
-  m_RootOrder: 33
+  m_RootOrder: 34
   m_LocalEulerAnglesHint: {x: 0, y: 0.4, z: -0.15}
 --- !u!4 &4439291319652572
 Transform:
@@ -11024,7 +11024,7 @@ Transform:
   m_LocalScale: {x: 0.08999998, y: 1.24, z: -1.2}
   m_Children: []
   m_Father: {fileID: 4245141458745788}
-  m_RootOrder: 20
+  m_RootOrder: 21
   m_LocalEulerAnglesHint: {x: 0, y: 90.62, z: 0.51}
 --- !u!4 &4539749203995752
 Transform:
@@ -11128,7 +11128,7 @@ Transform:
   m_LocalScale: {x: 0.09, y: 1, z: 1.3}
   m_Children: []
   m_Father: {fileID: 4245141458745788}
-  m_RootOrder: 17
+  m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 91.47, z: 0.51}
 --- !u!4 &4550389031644626
 Transform:
@@ -11180,7 +11180,7 @@ Transform:
   m_LocalScale: {x: 0.09000001, y: 0.9999999, z: 2.0000005}
   m_Children: []
   m_Father: {fileID: 4245141458745788}
-  m_RootOrder: 35
+  m_RootOrder: 36
   m_LocalEulerAnglesHint: {x: 0, y: 98.2, z: 0.51}
 --- !u!4 &4559331655671478
 Transform:
@@ -11359,7 +11359,7 @@ Transform:
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children: []
   m_Father: {fileID: 4245141458745788}
-  m_RootOrder: 37
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4586660087342592
 Transform:
@@ -11526,7 +11526,7 @@ Transform:
   m_LocalScale: {x: 0.089999996, y: 0.9999999, z: -0.7600001}
   m_Children: []
   m_Father: {fileID: 4245141458745788}
-  m_RootOrder: 28
+  m_RootOrder: 29
   m_LocalEulerAnglesHint: {x: 0, y: 91.04, z: -0.15}
 --- !u!4 &4614559774475702
 Transform:
@@ -11781,7 +11781,7 @@ Transform:
   m_LocalScale: {x: 0.089999996, y: 1.24, z: -1.12}
   m_Children: []
   m_Father: {fileID: 4245141458745788}
-  m_RootOrder: 18
+  m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 180.8, z: 0.51}
 --- !u!4 &4649739792291230
 Transform:
@@ -12588,7 +12588,7 @@ Transform:
   m_LocalScale: {x: 0.08999998, y: 0.9999999, z: 0.35}
   m_Children: []
   m_Father: {fileID: 4245141458745788}
-  m_RootOrder: 27
+  m_RootOrder: 28
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0.51}
 --- !u!4 &4757772105690100
 Transform:
@@ -12701,7 +12701,7 @@ Transform:
   m_LocalScale: {x: 0.089999996, y: 1.24, z: -1.1199998}
   m_Children: []
   m_Father: {fileID: 4245141458745788}
-  m_RootOrder: 30
+  m_RootOrder: 31
   m_LocalEulerAnglesHint: {x: 0, y: 180.8, z: 0.51}
 --- !u!4 &4769731260416334
 Transform:
@@ -12781,7 +12781,7 @@ Transform:
   m_LocalScale: {x: 0.08999999, y: 1, z: 0.35}
   m_Children: []
   m_Father: {fileID: 4245141458745788}
-  m_RootOrder: 15
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0.51}
 --- !u!4 &4781191769411130
 Transform:
@@ -12938,7 +12938,7 @@ Transform:
   m_LocalScale: {x: 0.089999996, y: 0.9999999, z: -0.7600001}
   m_Children: []
   m_Father: {fileID: 4245141458745788}
-  m_RootOrder: 21
+  m_RootOrder: 22
   m_LocalEulerAnglesHint: {x: 0, y: 0.4, z: -0.15}
 --- !u!4 &4806023371225594
 Transform:
@@ -13280,7 +13280,7 @@ Transform:
   m_LocalScale: {x: 0.08999999, y: 1, z: -1.09}
   m_Children: []
   m_Father: {fileID: 4245141458745788}
-  m_RootOrder: 13
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 2.78, z: 0.67}
 --- !u!4 &4868970555063884
 Transform:
@@ -13715,7 +13715,7 @@ Transform:
   m_LocalScale: {x: 0.08999998, y: 1.24, z: -1.92}
   m_Children: []
   m_Father: {fileID: 4245141458745788}
-  m_RootOrder: 19
+  m_RootOrder: 20
   m_LocalEulerAnglesHint: {x: 0, y: 90.62, z: 0.51}
 --- !u!4 &4939890036531214
 Transform:
@@ -13897,7 +13897,7 @@ Transform:
   m_LocalScale: {x: 0.089999996, y: 0.9999999, z: 2}
   m_Children: []
   m_Father: {fileID: 4245141458745788}
-  m_RootOrder: 23
+  m_RootOrder: 24
   m_LocalEulerAnglesHint: {x: 0, y: 98.2, z: 0.51}
 --- !u!4 &4978988362368424
 Transform:
@@ -14033,7 +14033,7 @@ Transform:
   m_LocalScale: {x: 0.08999999, y: 1, z: -0.3}
   m_Children: []
   m_Father: {fileID: 4245141458745788}
-  m_RootOrder: 14
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0.51}
 --- !u!4 &4995431593214954
 Transform:
@@ -15292,7 +15292,7 @@ MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1347918238516344}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1

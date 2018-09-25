@@ -38,92 +38,14 @@ namespace GoogleARCore.Examples.AugmentedImage
         public AugmentedImage Image;
 
         /// <summary>
-        /// A model for the lower left corner of the frame to place when an image is detected.
-        /// </summary>
-        public GameObject FrameLowerLeft;
-
-        /// <summary>
-        /// A model for the lower right corner of the frame to place when an image is detected.
-        /// </summary>
-        public GameObject FrameLowerRight;
-
-        /// <summary>
-        /// A model for the upper left corner of the frame to place when an image is detected.
-        /// </summary>
-        public GameObject FrameUpperLeft;
-
-        /// <summary>
-        /// A model for the upper right corner of the frame to place when an image is detected.
-        /// </summary>
-        public GameObject FrameUpperRight;
-		public GameObject plane5;
-		public GameObject plane6;
-		public GameObject plane7;
-		public GameObject plane8;
-		public GameObject plane9;
-		public GameObject plane10;
-		public GameObject plane11;
-		public GameObject plane12;
-		public GameObject Track;
-		private int Dist = 24;
-
-        /// <summary>
         /// The Unity Update method.
         /// </summary>
         public void Update()
         {
             if (Image == null || Image.TrackingState != TrackingState.Tracking)
             {	
-//                FrameLowerLeft.SetActive(false);
-//                FrameLowerRight.SetActive(false);
-//                FrameUpperLeft.SetActive(false);
-//                FrameUpperRight.SetActive(false);
-//				plane5.SetActive (false);
-//				plane6.SetActive (false);
-//				plane7.SetActive (false);
-//				plane8.SetActive (false);
-//				plane9.SetActive (false);
-//				plane10.SetActive (false);
-//				plane11.SetActive (false);
-//				plane12.SetActive (false);
                 return;
             }
-
-            //float halfWidth = Image.ExtentX / 2;
-            //float halfHeight = Image.ExtentZ / 2;
-//            FrameLowerLeft.transform.localPosition = (12 * Vector3.left) + (12 * Vector3.back);
-//            FrameLowerRight.transform.localPosition = (12 * Vector3.right) + (12 * Vector3.back);
-//            FrameUpperLeft.transform.localPosition = (12 * Vector3.left) + (12 * Vector3.forward);
-//            FrameUpperRight.transform.localPosition = (12 * Vector3.right) + (12 * Vector3.forward);
-//
-//			plane5.transform.localPosition = (Dist * Vector3.forward);
-//			plane6.transform.localPosition = ((Dist*2) * Vector3.forward);
-//			plane7.transform.localPosition = ((Dist*3) * Vector3.forward);
-//			plane8.transform.localPosition = ((Dist*4) * Vector3.forward);
-//			plane9.transform.localPosition = ((Dist*5) * Vector3.forward);
-//			plane10.transform.localPosition = ((Dist*6) * Vector3.forward);
-//			plane11.transform.localPosition = ((Dist*7) * Vector3.forward);
-//			plane12.transform.localPosition = ((Dist*8) * Vector3.forward);
-            
-
-
-
-
-//			FrameLowerLeft.SetActive(true);
-//            FrameLowerRight.SetActive(true);
-//            FrameUpperLeft.SetActive(true);
-//            FrameUpperRight.SetActive(true);
-			//plane5.SetActive (true);
-			//plane6.SetActive (true);
-			//plane7.SetActive (true);
-			//plane8.SetActive (true);
-			//plane9.SetActive (true);
-			//plane10.SetActive (true);
-			//plane11.SetActive (true);
-			//plane12.SetActive (true);
-
-
-
 
         }
     }

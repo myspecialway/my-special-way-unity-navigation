@@ -1,37 +1,26 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using Navigation;
 using UnityEngine;
 
 public class Init : MonoBehaviour
 {
 	[SerializeField]
-	private Navigation nav;
-	
-	private void Start ()
-	{		
+	private Navigator navigator;
+
+	private void Start()
+	{
 		var unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
-		
-		Debug.Log("unityplayer = " + unityPlayer);
 		
 		var currentActivity = unityPlayer?.GetStatic<AndroidJavaObject>("currentActivity");
 		
-		Debug.Log("currentActivity = " + currentActivity);
-		
- 
 		var intent = currentActivity?.Call<AndroidJavaObject>("getIntent");
 		
-		Debug.Log("intent = " + intent);
-
 		var bundle = intent?.Call<AndroidJavaObject>("getExtras");
 
-		Debug.Log("bundle = " + intent);
-		
-		var destName = bundle?.Call<string> ("getCharSequence", "destination", @"""");
+		var destName = bundle?.Call<string> ("getCharSequence", "destination", null);
 	
 		if (string.IsNullOrEmpty(destName))
 		{
-			destName = "A";
+			destName = "C1";
 		}
 	
 		Debug.Log("destName = " + destName);
@@ -40,7 +29,7 @@ public class Init : MonoBehaviour
 
 		if (dest != null)
 		{
-			StartCoroutine(nav.CalculateNavAndShowPath(dest.transform));
+			StartCoroutine(navigator.NavigateTo(dest.transform));
 		}
 	}
 }
