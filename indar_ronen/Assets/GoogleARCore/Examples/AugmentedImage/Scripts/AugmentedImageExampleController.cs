@@ -18,6 +18,8 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
+using UnityEngine.AI;
+
 namespace GoogleARCore.Examples.AugmentedImage
 {
     using System.Collections.Generic;
@@ -31,12 +33,6 @@ namespace GoogleARCore.Examples.AugmentedImage
     /// </summary>
     public class AugmentedImageExampleController : MonoBehaviour
     {
-        [SerializeField] private GameObject _chooseDestinationPopup;
-        [SerializeField] private GameObject _button;        
-        [SerializeField] private Dropdown _destionationDropdown;        
-        
-        public static string[] DestionationOptions = {"AB", "AC", "AD", "AE"};
-
         /// <summary>
         /// A prefab for visualizing an AugmentedImage.
         /// </summary>
@@ -82,8 +78,7 @@ namespace GoogleARCore.Examples.AugmentedImage
                 {
                     // Create an anchor to ensure that ARCore keeps tracking this augmented image.
                     Anchor anchor = image.CreateAnchor(image.CenterPose);
-                    visualizer =
-                        (AugmentedImageVisualizer) Instantiate(AugmentedImageVisualizerPrefab, anchor.transform);
+                    visualizer = (AugmentedImageVisualizer)Instantiate(AugmentedImageVisualizerPrefab, anchor.transform);
                     visualizer.Image = image;
                     m_Visualizers.Add(image.DatabaseIndex, visualizer);
                 }
@@ -104,47 +99,7 @@ namespace GoogleARCore.Examples.AugmentedImage
                 }
             }
 
-            if (_chooseDestinationPopup.activeInHierarchy)
-            {
-                FitToScanOverlay.SetActive(false);
-                return;
-            }
-
             FitToScanOverlay.SetActive(true);
-        }
-
-        public void OnDestinationSelected(string destination)
-        {
-            switch (destination)
-            {
-                case "AB":
-                    AugmentedImageVisualizer.CurrentDestination = DestinationType.AtoB;
-                    break;
-                case "AC":
-                    AugmentedImageVisualizer.CurrentDestination = DestinationType.AtoC;
-                    break;
-                case "AD":
-                    AugmentedImageVisualizer.CurrentDestination = DestinationType.AtoD;
-                    break;
-                case "AE":
-                    AugmentedImageVisualizer.CurrentDestination = DestinationType.AtoE;
-                    break;
-            }
-            
-            Destroy(GameObject.Find("Dropdown List"));            
-            _chooseDestinationPopup.SetActive(false);
-        }
-
-
-        public void OnDestinationSelected()
-        {
-            var destination = _destionationDropdown.value;
-            OnDestinationSelected(DestionationOptions[destination]);
-        }
-
-        public void OnDestinationButtonClicked()
-        {
-            _chooseDestinationPopup.SetActive(true);
         }
     }
 }

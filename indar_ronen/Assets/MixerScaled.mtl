@@ -1,0 +1,120 @@
+newmtl KitchenMixer:wire_000000000
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.35 0.35 0.35
+Ns 32.00
+newmtl KitchenMixer:wire_002002002
+illum 4
+Kd 0.01 0.01 0.01
+Ka 0.01 0.01 0.01
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.35 0.35 0.35
+Ns 32.00
+newmtl KitchenMixer:wire_006135006
+illum 4
+Kd 0.02 0.53 0.02
+Ka 0.02 0.53 0.02
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.35 0.35 0.35
+Ns 32.00
+newmtl KitchenMixer:wire_008008136
+illum 4
+Kd 0.03 0.03 0.53
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.35 0.35 0.35
+Ns 32.00
+newmtl KitchenMixer:wire_057008136
+illum 4
+Kd 0.22 0.03 0.53
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.35 0.35 0.35
+Ns 32.00
+newmtl KitchenMixer:wire_087225198
+illum 4
+Kd 0.34 0.88 0.78
+Ka 0.34 0.88 0.78
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.35 0.35 0.35
+Ns 32.00
+newmtl KitchenMixer:wire_141007058
+illum 4
+Kd 0.55 0.03 0.23
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.35 0.35 0.35
+Ns 32.00
+newmtl KitchenMixer:wire_143224087
+illum 4
+Kd 0.56 0.88 0.34
+Ka 0.56 0.88 0.34
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.35 0.35 0.35
+Ns 32.00
+newmtl KitchenMixer:wire_153228153
+illum 4
+Kd 0.60 0.89 0.60
+Ka 0.60 0.89 0.60
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.35 0.35 0.35
+Ns 32.00
+newmtl KitchenMixer:wire_154154229
+illum 4
+Kd 0.60 0.60 0.90
+Ka 0.60 0.60 0.90
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.35 0.35 0.35
+Ns 32.00
+newmtl KitchenMixer:wire_154185229
+illum 4
+Kd 0.60 0.73 0.90
+Ka 0.60 0.73 0.90
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.35 0.35 0.35
+Ns 32.00
+newmtl KitchenMixer:wire_214228153
+illum 4
+Kd 0.84 0.89 0.60
+Ka 0.84 0.89 0.60
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.35 0.35 0.35
+Ns 32.00
+newmtl KitchenMixer:wire_224086086
+illum 4
+Kd 0.88 0.34 0.34
+Ka 0.88 0.34 0.34
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.35 0.35 0.35
+Ns 32.00
+newmtl KitchenMixer:wire_227152152
+illum 4
+Kd 0.89 0.60 0.60
+Ka 0.89 0.60 0.60
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.35 0.35 0.35
+Ns 32.00
+newmtl KitchenMixer:wire_228153184
+illum 4
+Kd 0.89 0.89 0.89
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.35 0.35 0.35
+Ns 32.00

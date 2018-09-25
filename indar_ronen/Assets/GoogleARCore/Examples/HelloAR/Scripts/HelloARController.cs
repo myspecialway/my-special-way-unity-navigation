@@ -48,10 +48,12 @@ namespace GoogleARCore.Examples.HelloAR
         /// <summary>
         /// A model to place when a raycast from a user touch hits a plane.
         /// </summary>
-        public GameObject AndyAndroidPrefab;
+        public GameObject AndyPlanePrefab;
 
-
-		public GameObject SecondPrefab;
+        /// <summary>
+        /// A model to place when a raycast from a user touch hits a feature point.
+        /// </summary>
+        public GameObject AndyPointPrefab;
 
         /// <summary>
         /// A gameobject parenting UI for displaying the "searching for planes" snackbar.
@@ -73,12 +75,6 @@ namespace GoogleARCore.Examples.HelloAR
         /// True if the app is in the process of quitting due to an ARCore connection error, otherwise false.
         /// </summary>
         private bool m_IsQuitting = false;
-		private bool bool_New = false;
-		public GameObject andyObject;
-		public GameObject SecondObject;
-
-
-
 
         /// <summary>
         /// The Unity Update() method.
@@ -125,32 +121,29 @@ namespace GoogleARCore.Examples.HelloAR
                 }
                 else
                 {
+                    // Choose the Andy model for the Trackable that got hit.
+                    GameObject prefab;
+                    if (hit.Trackable is FeaturePoint)
+                    {
+                        prefab = AndyPointPrefab;
+                    }
+                    else
+                    {
+                        prefab = AndyPlanePrefab;
+                    }
 
-					if (bool_New == false) {
-						// Instantiate Andy model at the hit pose.
-						andyObject = Instantiate (AndyAndroidPrefab, hit.Pose.position, hit.Pose.rotation);
-						SecondObject = Instantiate (SecondPrefab, hit.Pose.position, hit.Pose.rotation);
+                    // Instantiate Andy model at the hit pose.
+                    var andyObject = Instantiate(prefab, hit.Pose.position, hit.Pose.rotation);
 
+                    // Compensate for the hitPose rotation facing away from the raycast (i.e. camera).
+                    andyObject.transform.Rotate(0, k_ModelRotation, 0, Space.Self);
 
+                    // Create an anchor to allow ARCore to track the hitpoint as understanding of the physical
+                    // world evolves.
+                    var anchor = hit.Trackable.CreateAnchor(hit.Pose);
 
-						// Compensate for the hitPose rotation facing away from the raycast (i.e. camera).
-						andyObject.transform.Rotate (0, k_ModelRotation, 0, Space.Self);
-						SecondObject.transform.Rotate (0, k_ModelRotation, 0, Space.Self);
-
-						// Create an anchor to allow ARCore to track the hitpoint as understanding of the physical
-						// world evolves.
-						var anchor = hit.Trackable.CreateAnchor (hit.Pose);
-
-						// Make Andy model a child of the anchor.
-						andyObject.transform.parent = anchor.transform;
-						SecondObject.transform.parent = anchor.transform;
-						bool_New = true;
-					} else {
-						Destroy (andyObject);
-						Destroy (SecondObject);
-						bool_New = false;
-					}
-					
+                    // Make Andy model a child of the anchor.
+                    andyObject.transform.parent = anchor.transform;
                 }
             }
         }
