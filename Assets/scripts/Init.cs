@@ -3,9 +3,8 @@ using UnityEngine;
 
 public class Init : MonoBehaviour
 {
-	[SerializeField]
-	private Navigator navigator;
-
+	[SerializeField] private AudioSource _audioSource;
+	
 	private void Start()
 	{
 		var unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
@@ -25,11 +24,7 @@ public class Init : MonoBehaviour
 	
 		Debug.Log("destName = " + destName);
 		
-		var dest = GameObject.Find(destName);
-
-		if (dest != null)
-		{
-			StartCoroutine(navigator.NavigateTo(dest.transform));
-		}
+		var navigator = new Navigator(new Dijkstra(), _audioSource);
+		navigator.Navigate("A0", destName);
 	}
 }

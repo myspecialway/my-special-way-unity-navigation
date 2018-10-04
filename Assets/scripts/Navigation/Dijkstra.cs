@@ -1,119 +1,80 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Navigation
 {   
-    public class Dijkstra 
+    public class Dijkstra : INavigation
     {
-        private class ExtendedNode
+        public List<string> GetShortestPath(Dictionary<string, Node> graph, string from, string to)
         {
-            public Node Node { private set; get; }
-
-            public float Distance { set; get; }
+            var distances = CreateDistanceDict(graph, from);
+            var previousNodes = new Dictionary<string, string>();
+            var nodesToCheck = graph.Keys.ToList();
+            var finalPath = new List<string>();
             
-            public ExtendedNode PreviousSmallest { set; get; }            
-
-            public bool IsChecked { set; get; }
-            
-            public ExtendedNode(Node node)
+            while (nodesToCheck.Count > 0)
             {
-                Node = node;
-                Distance = float.MaxValue;
-                IsChecked = false;
-            }
-        }
-        
-        private readonly List<ExtendedNode> _nodes;
+                var currentMinNodeName = GetMinDistanceNodeName(nodesToCheck, distances);
+                var currentMinNode = graph[currentMinNodeName];
+                nodesToCheck.Remove(currentMinNodeName);
 
-        public Dijkstra(Node[] nodes)
-        {
-            _nodes = new List<ExtendedNode>(nodes.Length);
-            foreach (var node in nodes)
-            {
-                _nodes.Add(new ExtendedNode(node));
-            }
-        }
-
-        public List<Node> GetShortestPath(Node from, Node to)
-        {
-         
-            ResetPathsList(from);
-            var path = new List<Node>();
-
-            while (_nodes.Count > 0)
-            {
-                var currentMinNode = GetCurrentShortestPath();
-
-                if (currentMinNode == null)
+                if (currentMinNodeName == to)
                 {
-                    break;
-                }
-
-                currentMinNode.IsChecked = true;
-
-                if (currentMinNode.Node == to)
-                {
-                    var insert = currentMinNode;
-                    do
+                    finalPath.Add(currentMinNodeName);
+                    while (previousNodes.ContainsKey(currentMinNodeName))
                     {
-                        path.Add(insert.Node);
-                    } while ((insert = insert.PreviousSmallest) != null);
+                        currentMinNodeName = previousNodes[currentMinNodeName];
+                        finalPath.Add(currentMinNodeName);
+                    }
 
                     break;
                 }
                 
-                foreach (var neighbor in currentMinNode.Node.Neighbors)
+                foreach (var neighbor in currentMinNode.Neighbors)
                 {
-                    var newDistance = currentMinNode.Node.DistanceTo(neighbor) + currentMinNode.Distance;
-                    var neighborExtendedNode = FindNode(neighbor);
-                    if (newDistance < neighborExtendedNode.Distance)
+                    var newDistance = currentMinNode.DistanceTo(neighbor) + distances[currentMinNodeName];
+                    if (newDistance < distances[neighbor.Name])
                     {
-                        neighborExtendedNode.Distance = newDistance;
-                        neighborExtendedNode.PreviousSmallest = currentMinNode;
+                        distances[neighbor.Name] = newDistance;
+                        previousNodes[neighbor.Name] = currentMinNodeName;
                     }
                 }
             }
 
-            return path;
+            return finalPath;
         }
 
-        private void ResetPathsList(Node start)
+        private Dictionary<string, float> CreateDistanceDict(Dictionary<string, Node> graph, string from)
         {
-            foreach (var node in _nodes)
+            var distances = new Dictionary<string, float>();
+            foreach (var key in graph.Keys)
             {
-                node.Distance = (node.Node == start) ? 0 : float.MaxValue;
-                node.IsChecked = false;
+                distances.Add(key, float.MaxValue);
             }
+
+            distances[from] = 0;
+
+            return distances;
         }
 
-        private ExtendedNode GetCurrentShortestPath()
+        private string GetMinDistanceNodeName(List<string> nodes, Dictionary<string, float> distances)
         {
-            ExtendedNode minNode = null;
-            
-            foreach (var node in _nodes)
-            {
-                if (!node.IsChecked && (minNode == null || node.Distance.CompareTo() node.Distance < minNode.Distance))
-                {
-                    minNode = node;
-                } 
-            }           
+            var minDistance = distances[nodes[0]];
+            var minKey = nodes[0];
 
-            return minNode;
-        }
-
-        private ExtendedNode FindNode(Node node)
-        {
-            foreach (var extendedNode in _nodes)
+            foreach (var node in nodes)
             {
-                if (extendedNode.Node == node)
+                if (distances[node] < minDistance)
                 {
-                    return extendedNode;
+                    minDistance = distances[node];
+                    minKey = node;
                 }
-            }
+            }        
 
-            return null;
+            return minKey;
         }
     }
 }

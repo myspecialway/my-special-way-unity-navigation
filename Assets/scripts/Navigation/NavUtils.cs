@@ -8,7 +8,7 @@ using UnityEngine;
 public class NavUtils  
 {
    
-    public static Node[] CreateGraph(GameObject[] waypoints, GameObject[] paths)
+    public static Dictionary<string, Node> CreateGraph(GameObject[] waypoints, GameObject[] paths)
     {
         var relationships = new Dictionary<string, Node>();
 
@@ -24,6 +24,6 @@ public class NavUtils
             relationships[waypointsInPath[1]].AddNeighbor(relationships[waypointsInPath[0]]);
         }
 
-        return relationships.Values.ToArray();
+        return relationships;
     }
 }
