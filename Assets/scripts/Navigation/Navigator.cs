@@ -35,7 +35,7 @@ namespace Navigation
 			var path = _navigation.GetShortestPath(_graph, from, to);
 			Debug.Log("Path found - " + path.ToString());
 			ShowPath(path);
-			_startNav.PlayOneShot(_startNav.clip);
+			if(_startNav != null) _startNav.PlayOneShot(_startNav.clip);
 		}
 
 		private void HideAllPaths()
