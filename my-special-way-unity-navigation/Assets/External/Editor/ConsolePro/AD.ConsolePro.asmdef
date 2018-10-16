@@ -1,0 +1,8 @@
+{
+    "name": "ConsolePro",
+    "references": [],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": []
+}
