@@ -11,7 +11,10 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/GoogleARCore/Examples/ComputerVision/Scenes/ComputerVision.unity
     guid: 5ef0f7f7f2c7b4285b707265348bbffd
-  - enabled: 1
+  - enabled: 0
     path: Assets/GoogleARCore/Examples/HelloAR/Scenes/HelloAR.unity
     guid: e6a6fa04348cb45c9b0221eb19c946da
+  - enabled: 1
+    path: Assets/Scenes/MswNavigation_TestScene.unity
+    guid: dc4b87fbab03a77488bc71abc601c321
   m_configObjects: {}
