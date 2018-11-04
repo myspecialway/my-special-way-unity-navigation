@@ -1,4 +1,6 @@
-﻿namespace Msw.Core.Controllers
+﻿using TMPro;
+
+namespace Msw.Core.Controllers
 {
     using GoogleARCore;
     using UnityEngine;
@@ -42,9 +44,23 @@
         /// <summary>
         /// A prefab for visualizing an environment.
         /// </summary>
-        public GameObject _environmentVisualizerPrefab;
+        [SerializeField] private GameObject _environmentVisualizerPrefab;
 
         private GameObject _environmentVisualizer = null;
+
+        /// <summary>
+        /// A model to place when a raycast from a user touch hits a plane.
+        /// </summary>
+        [SerializeField] private GameObject _vitualAnchorPlanePrefab;
+
+        [SerializeField] private TextMeshProUGUI _sampleCounterText;
+        
+        private List<Vector3> _positionAggregator = new List<Vector3>();
+        private List<Vector3> _rotationAggregator = new List<Vector3>();
+
+        private const int RequiredSampleCount = 10;
+        private int _sampleCount = 0;
+        private bool _didCollectEnoughSamples = false;
 
         protected virtual void Awake()
         {
@@ -61,6 +77,15 @@
         protected virtual void Update()
         {
             _UpdateApplicationLifecycle();
+
+//            if (_sampleCounterText.gameObject.activeSelf)
+//            {
+//                // update sample counter text
+//                _sampleCounterText.text = $"{_sampleCount} samples";
+//            }
+            
+            // update sample counter text
+            _sampleCounterText.text = $"{_sampleCount} samples";
 
             Session.GetTrackables<DetectedPlane>(_allDetectedPlanes, TrackableQueryFilter.All);
 
@@ -93,13 +118,37 @@
                     if (augmentedImage.TrackingState == TrackingState.Tracking &&
                         _environmentVisualizer       == null)
                     {
+
+                        if (!_didCollectEnoughSamples)
+                        {
+                            _positionAggregator.Add(augmentedImage.CenterPose.position);
+                            _rotationAggregator.Add(augmentedImage.CenterPose.rotation.eulerAngles);
+
+                            _sampleCount++;
+
+                            if (_sampleCount >= RequiredSampleCount)
+                            {
+                                _didCollectEnoughSamples = true;
+                            }
+
+                            break;
+                        }
+                        else
+                        {
+                            _sampleCounterText.gameObject.SetActive(false);
+                        }
+                        
                         var trackableHits = new List<TrackableHit>();
 
-                        const TrackableHitFlags filter =
-                            TrackableHitFlags.PlaneWithinBounds | TrackableHitFlags.PlaneWithinPolygon;
+//                        const TrackableHitFlags filter =
+//                            TrackableHitFlags.PlaneWithinBounds | TrackableHitFlags.PlaneWithinPolygon;
+
+                        // TODO think : like in HelloAR example
+                        const TrackableHitFlags raycastFilter = TrackableHitFlags.PlaneWithinPolygon |
+                                                                TrackableHitFlags.FeaturePointWithSurfaceNormal;
 
                         var didHitSomething = Frame.RaycastAll(_firstPersonCamera.transform.position,
-                            _firstPersonCamera.transform.forward, trackableHits, Mathf.Infinity, filter);
+                            _firstPersonCamera.transform.forward, trackableHits, Mathf.Infinity, raycastFilter);
 
                         if (didHitSomething)
                         {
@@ -132,10 +181,20 @@
                             if (foundSuchTrackableHit)
                             {
 //                                _environmentVisualizer = Instantiate(_environmentVisualizerPrefab, hitToAssociateWith.Pose.position, hitToAssociateWith.Pose.rotation);
-                                var pose = augmentedImage.CenterPose;
-                                var pos  = pose.position;
-                                var rot  = pose.rotation;
-                                _environmentVisualizer = Instantiate(_environmentVisualizerPrefab, pos, rot);
+
+//                                var pose = augmentedImage.CenterPose;
+//                                var pos  = pose.position;
+//                                var rot  = pose.rotation;
+//                                
+//                                _environmentVisualizer = Instantiate(_environmentVisualizerPrefab, pos, rot);
+
+                                // calculate median value for augmented image position and rotation
+                                var midIndex = (int)(_positionAggregator.Count / 2);
+
+                                var poseMedian = _positionAggregator[midIndex];
+                                var rotMedian = _rotationAggregator[midIndex];
+                                
+                                _environmentVisualizer = Instantiate(_environmentVisualizerPrefab, poseMedian, Quaternion.Euler(rotMedian));
 
                                 var initialAnchor = hitToAssociateWith.Trackable.CreateAnchor(hitToAssociateWith.Pose);
                                 _environmentVisualizer.transform.parent = initialAnchor.transform;
@@ -172,14 +231,18 @@
             {
                 return;
             }
-            
+
             var trackableHits = new List<TrackableHit>();
 
-            const TrackableHitFlags filter =
-                TrackableHitFlags.PlaneWithinBounds | TrackableHitFlags.PlaneWithinPolygon;
+//                        const TrackableHitFlags filter =
+//                            TrackableHitFlags.PlaneWithinBounds | TrackableHitFlags.PlaneWithinPolygon;
+
+            // TODO think : like in HelloAR example
+            const TrackableHitFlags raycastFilter = TrackableHitFlags.PlaneWithinPolygon |
+                                                    TrackableHitFlags.FeaturePointWithSurfaceNormal;
 
             var didHitSomething = Frame.RaycastAll(_firstPersonCamera.transform.position,
-                _firstPersonCamera.transform.forward, trackableHits, Mathf.Infinity, filter);
+                _firstPersonCamera.transform.forward, trackableHits, Mathf.Infinity, raycastFilter);
 
             if (didHitSomething)
             {
@@ -213,6 +276,12 @@
                 {
                     var virtualAnchor = hitToAssociateWith.Trackable.CreateAnchor(hitToAssociateWith.Pose);
                     _environmentVisualizer.transform.parent = virtualAnchor.transform;
+
+                    // create a model for this virtual anchor
+                    var virtualAnchorModel = Instantiate(_vitualAnchorPlanePrefab, hitToAssociateWith.Pose.position,
+                        hitToAssociateWith.Pose.rotation);
+
+                    virtualAnchorModel.transform.parent = virtualAnchor.transform;
                 }
             }
         }

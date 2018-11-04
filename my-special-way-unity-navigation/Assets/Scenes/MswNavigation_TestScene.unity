@@ -252,9 +252,25 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114834389522202946, guid: 8b2b13f23a4869445974004682750aa3,
+        type: 2}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114834389522202946, guid: 8b2b13f23a4869445974004682750aa3,
+        type: 2}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8b2b13f23a4869445974004682750aa3, type: 2}
   m_IsPrefabAsset: 0
+--- !u!114 &529781461 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114834389522202946, guid: 8b2b13f23a4869445974004682750aa3,
+    type: 2}
+  m_PrefabInternal: {fileID: 315275762}
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
 --- !u!1 &919260868 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1239610773625892, guid: 8b2b13f23a4869445974004682750aa3,
@@ -292,6 +308,9 @@ MonoBehaviour:
   _searchingForPlaneUI: {fileID: 919260868}
   _environmentVisualizerPrefab: {fileID: 1893448719382756, guid: 3c2973440af3f2c4a97abb533f3706f2,
     type: 2}
+  _vitualAnchorPlanePrefab: {fileID: 1145107535417422, guid: 26d7c0fdac5e8af4488fe0723321a2be,
+    type: 2}
+  _sampleCounterText: {fileID: 529781461}
 --- !u!4 &936869890
 Transform:
   m_ObjectHideFlags: 0
