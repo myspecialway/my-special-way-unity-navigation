@@ -1,16 +1,13 @@
 #region Usings
 
-using TMPro;
 using UnityEngine;
 
 #endregion
 
 namespace Msw.Core.Controllers.DebugInfo
 {
-    public class FpsDebugInfo : MonoBehaviour
+    public class FpsDebugInfo : DebugInfoBase
     {
-        [SerializeField] private TextMeshProUGUI _text;
-
         // Attach this to a GUIText to make a frames/second indicator.
         //
         // It calculates frames/second over each updateInterval,
@@ -45,19 +42,19 @@ namespace Msw.Core.Controllers.DebugInfo
                 // display two fractional digits (f2 format)
                 float  fps              = _accum / _frames;
                 string stringFormatType = $"{fps:F2} FPS";
-                _text.text = stringFormatType;
+                DebugInfo.text = stringFormatType;
 
                 if (fps < 30)
                 {
-                    _text.color = Color.yellow;
+                    DebugInfo.color = Color.yellow;
                 }
                 else if (fps < 10)
                 {
-                    _text.color = Color.red;
+                    DebugInfo.color = Color.red;
                 }
                 else
                 {
-                    _text.color = Color.green;
+                    DebugInfo.color = Color.green;
                 }
 
                 _timeleft = _updateInterval;
