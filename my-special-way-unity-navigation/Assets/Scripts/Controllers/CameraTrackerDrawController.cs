@@ -1,5 +1,6 @@
 ﻿using System.Net.NetworkInformation;
 using GoogleARCore;
+using GoogleARCoreInternal;
 using UnityEngine;
 
 namespace Msw.Core.Controllers
@@ -57,6 +58,15 @@ namespace Msw.Core.Controllers
 
         private void CreateCameraTrajectoryNode()
         {
+//            var arCorePose = Frame.Pose;
+//
+//            var arCorePos = arCorePose.position;
+//            var arCoreRot = arCorePose.rotation;
+//            
+//            
+//
+//            return;
+            
             var camPos = _firstPersonCamera.transform.position;
             var camRot = _firstPersonCamera.transform.rotation;
             
