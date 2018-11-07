@@ -5,9 +5,12 @@ namespace Msw.Core.Controllers
     using GoogleARCore;
     using UnityEngine;
     using System.Collections.Generic;
+    using System;
+
 #if UNITY_EDITOR
     // Set up touch input propagation while using Instant Preview in the editor.
     using Input = GoogleARCore.InstantPreviewInput;
+    using UnityEngine.UI;
 
 #endif
 
@@ -54,6 +57,8 @@ namespace Msw.Core.Controllers
         [SerializeField] private GameObject _vitualAnchorPlanePrefab;
 
         [SerializeField] private TextMeshProUGUI _sampleCounterText;
+
+        [SerializeField] private TextMesh _distance;
         
         private List<Vector3> _positionAggregator = new List<Vector3>();
         private List<Vector3> _rotationAggregator = new List<Vector3>();
@@ -62,34 +67,21 @@ namespace Msw.Core.Controllers
         private int _sampleCount = 0;
         private bool _didCollectEnoughSamples = false;
 
-        protected virtual void Awake()
-        {
-            //
-        }
+        protected virtual void Awake(){}
 
-        protected virtual void Start()
-        {
-            //
-
-//            ARCoreSession.Instantiate();
-        }
+        protected virtual void Start(){}
 
         protected virtual void Update()
         {
             _UpdateApplicationLifecycle();
-
-//            if (_sampleCounterText.gameObject.activeSelf)
-//            {
-//                // update sample counter text
-//                _sampleCounterText.text = $"{_sampleCount} samples";
-//            }
-            
+           
             // update sample counter text
             _sampleCounterText.text = $"{_sampleCount} samples";
 
             Session.GetTrackables<DetectedPlane>(_allDetectedPlanes, TrackableQueryFilter.All);
 
             var showSearchingUI = true;
+
             for (var i = 0; i < _allDetectedPlanes.Count; i++)
             {
                 if (_allDetectedPlanes[i].TrackingState == TrackingState.Tracking)
@@ -140,8 +132,8 @@ namespace Msw.Core.Controllers
                         
                         var trackableHits = new List<TrackableHit>();
 
-//                        const TrackableHitFlags filter =
-//                            TrackableHitFlags.PlaneWithinBounds | TrackableHitFlags.PlaneWithinPolygon;
+//                      const TrackableHitFlags filter =
+//                      TrackableHitFlags.PlaneWithinBounds | TrackableHitFlags.PlaneWithinPolygon;
 
                         // TODO think : like in HelloAR example
                         const TrackableHitFlags raycastFilter = TrackableHitFlags.PlaneWithinPolygon |
@@ -202,6 +194,7 @@ namespace Msw.Core.Controllers
                                 _fitToScanOverlay.SetActive(false);
 
                                 InvokeRepeating(nameof(CreateVirtualAnchor), 1.0f, 1.0f);
+
                             }
                         }
                     }
@@ -223,6 +216,22 @@ namespace Msw.Core.Controllers
                     _environmentVisualizer = null;
                 }
             }
+            CalculateDistance();
+        }
+
+        private static int count = 0;
+
+        private void CalculateDistance()
+        {
+            count++;
+            if (_environmentVisualizer == null)
+            {
+                _distance.text = $"Unknown {count}";
+                return;
+            }
+            float dist = Vector3.Distance(_distance.transform.position, _firstPersonCamera.transform.position);
+            int _dis = (int)dist;
+            _distance.text = $"{_dis} m";
         }
 
         private void CreateVirtualAnchor()
