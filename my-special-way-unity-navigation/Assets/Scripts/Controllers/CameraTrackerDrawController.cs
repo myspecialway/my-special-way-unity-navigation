@@ -11,20 +11,21 @@ namespace Msw.Core.Controllers
         /// The first-person camera being used to render the passthrough camera image (i.e. AR background).
         /// </summary>
         [SerializeField] private Camera _firstPersonCamera;
-        
+
         /// <summary>
         /// A model to place when a raycast from a user touch hits a plane.
         /// </summary>
         [SerializeField] private GameObject _cameraTrajectoryNodePrefab;
+
         [SerializeField] private GameObject _arrowPrefab;
-        
+
         [SerializeField] private Transform _cameraTrajectoryRoot;
-        
+
         /// <summary>
         /// The rotation in degrees need to apply to model when the arrow model is placed.
         /// </summary>
         private const float k_ModelRotation = 180.0f;
-        
+
         /// <summary>
         /// True if the app is in the process of quitting due to an ARCore connection error, otherwise false.
         /// </summary>
@@ -45,15 +46,21 @@ namespace Msw.Core.Controllers
         protected virtual void Update()
         {
             _UpdateApplicationLifecycle();
-            
+
+            DrawTrajectory();
+
             // If the player has not touched the screen, we are done with this update.
             Touch touch;
             if (Input.touchCount < 1 || (touch = Input.GetTouch(0)).phase != TouchPhase.Began)
             {
                 return;
             }
-            
+
             CreateCameraTrajectoryNode();
+        }
+
+        private void DrawTrajectory()
+        {
         }
 
         private void CreateCameraTrajectoryNode()
@@ -66,12 +73,18 @@ namespace Msw.Core.Controllers
 //            
 //
 //            return;
-            
-            var camPos = _firstPersonCamera.transform.position;
-            var camRot = _firstPersonCamera.transform.rotation;
-            
+
+            var camPos            = _firstPersonCamera.transform.position;
+            var camRot            = _firstPersonCamera.transform.rotation;
+            var camRotEulerAngles = camRot.eulerAngles;
+            camRotEulerAngles.x = 0;
+            camRotEulerAngles.z = 0;
+            camRot              = Quaternion.Euler(camRotEulerAngles);
+
             // camera node
-            var camNodePos = camPos + _firstPersonCamera.transform.forward;
+            //var camNodePos = camPos + _firstPersonCamera.transform.forward; // TODO think : const height
+            var camNodePos = camPos; // + _firstPersonCamera.transform.forward; // TODO think : const height
+            camNodePos.y = .0f;      // TODO think : const height
             var trajectoryNode = Instantiate(_cameraTrajectoryNodePrefab, camNodePos, camRot);
 
             trajectoryNode.transform.parent = _cameraTrajectoryRoot;
@@ -81,12 +94,13 @@ namespace Msw.Core.Controllers
             trajectoryNodeController.NodePositionText.text = $"x {pos.x}\ny {pos.y}\nz {pos.z}";
 
             // arrow node
-            var offsetFromCamera = new Vector3(.0f, -1.4f, .0f);
+//            var offsetFromCamera = new Vector3(.0f, -1.4f, .0f); // TODO think : const height
 
-            var arrowPos = new Vector3(camPos.x, camPos.y, camPos.z);
-            arrowPos += offsetFromCamera; // as an average height
-            arrowPos += _firstPersonCamera.transform.forward; // to put it in front
-            
+//            var arrowPos = new Vector3(camPos.x, camPos.y, camPos.z); // TODO think : const height
+            var arrowPos = new Vector3(camPos.x, -1.4f, camPos.z); // TODO think : const height
+//            arrowPos += offsetFromCamera;                          // as an average height // TODO think : const height
+//            arrowPos += _firstPersonCamera.transform.forward;      // to put it in front // TODO think : const height
+
             var arrowNode = Instantiate(_arrowPrefab, arrowPos, camRot);
             arrowNode.transform.parent = _cameraTrajectoryRoot;
             arrowNode.transform.Rotate(0, k_ModelRotation, 0, Space.Self);
