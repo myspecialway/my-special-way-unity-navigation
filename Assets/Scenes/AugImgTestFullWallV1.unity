@@ -162,8 +162,6 @@ MonoBehaviour:
   _vitualAnchorPlanePrefab: {fileID: 1145107535417422, guid: de83d5c5505757a44916dd27bc5278b5,
     type: 2}
   _sampleCounterText: {fileID: 1875535413}
-  _distance: {fileID: 102417943857325010, guid: ac8aee735281143298e9053bfd7db1ab,
-    type: 2}
 --- !u!1001 &351217706
 Prefab:
   m_ObjectHideFlags: 0

@@ -57,8 +57,6 @@ namespace Msw.Core.Controllers
         [SerializeField] private GameObject _vitualAnchorPlanePrefab;
 
         [SerializeField] private TextMeshProUGUI _sampleCounterText;
-
-        [SerializeField] private TextMesh _distance;
         
         private List<Vector3> _positionAggregator = new List<Vector3>();
         private List<Vector3> _rotationAggregator = new List<Vector3>();
@@ -216,23 +214,9 @@ namespace Msw.Core.Controllers
                     _environmentVisualizer = null;
                 }
             }
-            CalculateDistance();
         }
 
-        private static int count = 0;
 
-        private void CalculateDistance()
-        {
-            count++;
-            if (_environmentVisualizer == null)
-            {
-                _distance.text = $"Unknown {count}";
-                return;
-            }
-            float dist = Vector3.Distance(_distance.transform.position, _firstPersonCamera.transform.position);
-            int _dis = (int)dist;
-            _distance.text = $"{_dis} m";
-        }
 
         private void CreateVirtualAnchor()
         {
