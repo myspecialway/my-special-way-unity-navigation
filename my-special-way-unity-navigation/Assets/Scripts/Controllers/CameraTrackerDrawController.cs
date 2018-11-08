@@ -47,8 +47,6 @@ namespace Msw.Core.Controllers
         {
             _UpdateApplicationLifecycle();
 
-            DrawTrajectory();
-
             // If the player has not touched the screen, we are done with this update.
             Touch touch;
             if (Input.touchCount < 1 || (touch = Input.GetTouch(0)).phase != TouchPhase.Began)
@@ -57,10 +55,6 @@ namespace Msw.Core.Controllers
             }
 
             CreateCameraTrajectoryNode();
-        }
-
-        private void DrawTrajectory()
-        {
         }
 
         private void CreateCameraTrajectoryNode()
