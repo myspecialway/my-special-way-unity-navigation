@@ -1,4 +1,5 @@
-﻿using System.Net.NetworkInformation;
+﻿using System.Collections.Generic;
+using System.Net.NetworkInformation;
 using GoogleARCore;
 using GoogleARCoreInternal;
 using UnityEngine;
@@ -43,10 +44,15 @@ namespace Msw.Core.Controllers
 
         public static int NodeCounter = 0;
 
+        public static Vector3 FloorPosition = Vector3.zero;
+        
         protected virtual void Update()
         {
             _UpdateApplicationLifecycle();
 
+            FloorPosition = TryFindFloorPlanePosition();
+//            FloorPosition = TryFindLowestFeaturePointPosition();
+            
             // If the player has not touched the screen, we are done with this update.
             Touch touch;
             if (Input.touchCount < 1 || (touch = Input.GetTouch(0)).phase != TouchPhase.Began)
@@ -56,6 +62,86 @@ namespace Msw.Core.Controllers
 
             CreateCameraTrajectoryNode();
         }
+
+        private static Vector3 TryFindLowestFeaturePointPosition()
+        {
+            var featurePoints = new List<FeaturePoint>();
+            
+            Session.GetTrackables<FeaturePoint>(featurePoints, TrackableQueryFilter.All);
+
+            FeaturePoint lowestFeaturePoint = null;
+
+            var pos            = Frame.Pose.position;
+            var currentDeviceY = pos.y;
+
+            var minY = Mathf.Infinity;
+
+            for (int i = 0; i < featurePoints.Count; i++)
+            {
+                var featurePoint = featurePoints[i];
+                if (featurePoint.TrackingState == TrackingState.Tracking/* &&
+                    featurePoint.OrientationMode == FeaturePointOrientationMode.SurfaceNormal*/)
+                {
+                    var detectedFeaturePointY = featurePoint.Pose.position.y;
+
+                    if (detectedFeaturePointY <= minY)
+                    {
+                        minY = detectedFeaturePointY;
+                        lowestFeaturePoint  = featurePoint;
+                    }
+                }
+            }
+
+            if (lowestFeaturePoint != null)
+            {
+                return lowestFeaturePoint.Pose.position;
+            }
+
+            return Vector3.zero;
+        }
+
+        private static Vector3 TryFindFloorPlanePosition()
+        {
+            List<DetectedPlane> allPlanes = new List<DetectedPlane>();
+
+            // Hide snackbar when currently tracking at least one plane.
+            Session.GetTrackables<DetectedPlane>(allPlanes);
+
+            DetectedPlane floorDetectedPlane = null;
+
+            var pos            = Frame.Pose.position;
+            var currentDeviceY = pos.y;
+
+            var minY = Mathf.Infinity;
+
+//            bool showSearchingUI = true;
+            for (int i = 0; i < allPlanes.Count; i++)
+            {
+                var detectedPlane = allPlanes[i];
+                if (detectedPlane.TrackingState == TrackingState.Tracking &&
+                    detectedPlane.PlaneType     == DetectedPlaneType.HorizontalUpwardFacing)
+                {
+                    var detectedPlaneY = detectedPlane.CenterPose.position.y;
+
+                    if (detectedPlaneY <= minY)
+                    {
+                        minY = detectedPlaneY;
+                        floorDetectedPlane  = detectedPlane;
+                    }
+
+//                    showSearchingUI = false;
+//                    break;
+                }
+            }
+
+            if (floorDetectedPlane != null)
+            {
+                return floorDetectedPlane.CenterPose.position;
+            }
+
+            return Vector3.zero;
+        }
+
 
         private void CreateCameraTrajectoryNode()
         {
@@ -78,7 +164,7 @@ namespace Msw.Core.Controllers
             // camera node
             //var camNodePos = camPos + _firstPersonCamera.transform.forward; // TODO think : const height
             var camNodePos = camPos; // + _firstPersonCamera.transform.forward; // TODO think : const height
-            camNodePos.y = .0f;      // TODO think : const height
+//            camNodePos.y = .0f;      // TODO think : const height
             var trajectoryNode = Instantiate(_cameraTrajectoryNodePrefab, camNodePos, camRot);
 
             trajectoryNode.transform.parent = _cameraTrajectoryRoot;
@@ -91,7 +177,7 @@ namespace Msw.Core.Controllers
 //            var offsetFromCamera = new Vector3(.0f, -1.4f, .0f); // TODO think : const height
 
 //            var arrowPos = new Vector3(camPos.x, camPos.y, camPos.z); // TODO think : const height
-            var arrowPos = new Vector3(camPos.x, -1.4f, camPos.z); // TODO think : const height
+            var arrowPos = new Vector3(camPos.x, FloorPosition.y, camPos.z); // TODO think : floor Y
 //            arrowPos += offsetFromCamera;                          // as an average height // TODO think : const height
 //            arrowPos += _firstPersonCamera.transform.forward;      // to put it in front // TODO think : const height
 

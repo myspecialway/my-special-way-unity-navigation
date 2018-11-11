@@ -11,6 +11,8 @@ namespace Msw.Core.Controllers
     public class TrajectoryNodeController : MonoBehaviour
     {
         [SerializeField] private GameObject  _constheightWayPoint;
+        [SerializeField] private GameObject  _cameraHeightWayPoint;
+        [SerializeField] private float       _verticalOffset;
         public                   TextMeshPro NodeIdText;
         public                   TextMeshPro NodePositionText;
 
@@ -23,6 +25,20 @@ namespace Msw.Core.Controllers
 
         protected virtual void Start()
         {
+            if (_cameraHeightWayPoint != null)
+            {
+                _cameraHeightWayPoint.SetActive(false);
+            }
+
+            if (NodeIdText != null)
+            {
+                NodeIdText.gameObject.SetActive(false);
+            }
+
+            if (NodePositionText != null)
+            {
+                NodePositionText.gameObject.SetActive(false);
+            }
         }
 
         protected virtual void Update()
@@ -35,7 +51,8 @@ namespace Msw.Core.Controllers
 
             var wayPoint = _constheightWayPoint.transform.position;
 
-            wayPoint.y                              = Frame.Pose.position.y - 1.0f;
+            wayPoint.y =
+                CameraTrackerDrawController.FloorPosition.y + _verticalOffset;
             _constheightWayPoint.transform.position = wayPoint;
 
 //            transform.LookAt(_mainCamera.transform);

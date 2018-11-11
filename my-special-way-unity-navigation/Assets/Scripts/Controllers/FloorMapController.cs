@@ -29,7 +29,7 @@ namespace Msw.Core.Controllers
 
             var mapPosition = map.transform.position;
 
-            mapPosition.y = Frame.Pose.position.y -1.4f;
+            mapPosition.y = CameraTrackerDrawController.FloorPosition.y;
             map.transform.position = mapPosition;
         }
 
@@ -55,7 +55,7 @@ namespace Msw.Core.Controllers
             eulerRot.z = 0;
             rot = Quaternion.Euler(eulerRot);
 
-            map = Instantiate(_mapPrefab, new Vector3(pos.x, -1.4f, pos.z), rot);
+            map = Instantiate(_mapPrefab, new Vector3(pos.x, CameraTrackerDrawController.FloorPosition.y, pos.z), rot);
         }
     }
 }

@@ -348,6 +348,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _constheightWayPoint: {fileID: 1970779101495262}
+  _cameraHeightWayPoint: {fileID: 1013524734018126}
+  _verticalOffset: 1
   NodeIdText: {fileID: 114791825590577354}
   NodePositionText: {fileID: 114559373825714606}
 --- !u!114 &114559373825714606
