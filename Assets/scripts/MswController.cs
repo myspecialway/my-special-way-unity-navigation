@@ -93,15 +93,7 @@ namespace Msw.Core.Controllers
 
             if (!showSearchingUI)
             {
-                // Get updated augmented images for this frame.
                 Session.GetTrackables(_tempAugmentedImages, TrackableQueryFilter.Updated);
-
-                // for the case we have already found initial position and instantiated/attached environment
-                // TODO : we should handle here creation of virtual anchors on the go 
-//                if (_environmentVisualizer != null)
-//                {
-//                    
-//                }
 
                 foreach (var augmentedImage in _tempAugmentedImages)
                 {
@@ -130,10 +122,6 @@ namespace Msw.Core.Controllers
                         
                         var trackableHits = new List<TrackableHit>();
 
-//                      const TrackableHitFlags filter =
-//                      TrackableHitFlags.PlaneWithinBounds | TrackableHitFlags.PlaneWithinPolygon;
-
-                        // TODO think : like in HelloAR example
                         const TrackableHitFlags raycastFilter = TrackableHitFlags.PlaneWithinPolygon |
                                                                 TrackableHitFlags.FeaturePointWithSurfaceNormal;
 
@@ -183,15 +171,17 @@ namespace Msw.Core.Controllers
 
                                 var poseMedian = _positionAggregator[midIndex];
                                 var rotMedian = _rotationAggregator[midIndex];
-                                
-                                _environmentVisualizer = Instantiate(_environmentVisualizerPrefab, poseMedian, Quaternion.Euler(rotMedian));
+
+                                var rot = Quaternion.Euler(rotMedian);
+                                rot.SetLookRotation(new Vector3(90f, 0f, 0f), Vector3.up);
+                                _environmentVisualizer = Instantiate(_environmentVisualizerPrefab, poseMedian, rot);
 
                                 var initialAnchor = hitToAssociateWith.Trackable.CreateAnchor(hitToAssociateWith.Pose);
                                 _environmentVisualizer.transform.parent = initialAnchor.transform;
 
                                 _fitToScanOverlay.SetActive(false);
 
-                                InvokeRepeating(nameof(CreateVirtualAnchor), 1.0f, 1.0f);
+                          //     InvokeRepeating(nameof(CreateVirtualAnchor), 1.0f, 1.0f);
 
                             }
                         }
@@ -218,70 +208,54 @@ namespace Msw.Core.Controllers
 
 
 
-        private void CreateVirtualAnchor()
-        {
-            if (_environmentVisualizer == null)
-            {
-                return;
-            }
+        //private void CreateVirtualAnchor()
+        //{
+        //    if (_environmentVisualizer == null)
+        //    {
+        //        return;
+        //    }
+        //    var trackableHits = new List<TrackableHit>();
+        //    const TrackableHitFlags raycastFilter = TrackableHitFlags.PlaneWithinPolygon |
+        //                                            TrackableHitFlags.FeaturePointWithSurfaceNormal;
+        //    var didHitSomething = Frame.RaycastAll(_firstPersonCamera.transform.position,
+        //        _firstPersonCamera.transform.forward, trackableHits, Mathf.Infinity, raycastFilter);
+        //    if (didHitSomething)
+        //    {
+        //        var minY = Mathf.Infinity;
+        //        var hitToAssociateWith    = new TrackableHit(); // with minimal 'y'
+        //        var foundSuchTrackableHit = false;
+        //        foreach (var trackableHit in trackableHits)
+        //        {
+        //            // Use hit pose and camera pose to check if hittest is from the
+        //            // back of the plane, if it is, no need to create the anchor.
+        //            if ((trackableHit.Trackable is DetectedPlane) &&
+        //                Vector3.Dot(_firstPersonCamera.transform.position - trackableHit.Pose.position,
+        //                    trackableHit.Pose.rotation * Vector3.up) < 0)
+        //            {
+        //                Debug.Log("Hit at back of the current DetectedPlane");
+        //            }
+        //            else
+        //            {
+        //                if (trackableHit.Pose.position.y < minY)
+        //                {
+        //                    minY                  = trackableHit.Pose.position.y;
+        //                    hitToAssociateWith    = trackableHit;
+        //                    foundSuchTrackableHit = true;
+        //                }
+        //            }
+        //        }
+        //        if (foundSuchTrackableHit)
+        //        {
+        //            var virtualAnchor = hitToAssociateWith.Trackable.CreateAnchor(hitToAssociateWith.Pose);
+        //            _environmentVisualizer.transform.parent = virtualAnchor.transform;
+        //            // create a model for this virtual anchor
+        //            var virtualAnchorModel = Instantiate(_vitualAnchorPlanePrefab, hitToAssociateWith.Pose.position,
+        //                hitToAssociateWith.Pose.rotation);
+        //            virtualAnchorModel.transform.parent = virtualAnchor.transform;
+        //        }
+        //    }
+        //}
 
-            var trackableHits = new List<TrackableHit>();
-
-//                        const TrackableHitFlags filter =
-//                            TrackableHitFlags.PlaneWithinBounds | TrackableHitFlags.PlaneWithinPolygon;
-
-            // TODO think : like in HelloAR example
-            const TrackableHitFlags raycastFilter = TrackableHitFlags.PlaneWithinPolygon |
-                                                    TrackableHitFlags.FeaturePointWithSurfaceNormal;
-
-            var didHitSomething = Frame.RaycastAll(_firstPersonCamera.transform.position,
-                _firstPersonCamera.transform.forward, trackableHits, Mathf.Infinity, raycastFilter);
-
-            if (didHitSomething)
-            {
-                var minY = Mathf.Infinity;
-
-                var hitToAssociateWith    = new TrackableHit(); // with minimal 'y'
-                var foundSuchTrackableHit = false;
-
-                foreach (var trackableHit in trackableHits)
-                {
-                    // Use hit pose and camera pose to check if hittest is from the
-                    // back of the plane, if it is, no need to create the anchor.
-                    if ((trackableHit.Trackable is DetectedPlane) &&
-                        Vector3.Dot(_firstPersonCamera.transform.position - trackableHit.Pose.position,
-                            trackableHit.Pose.rotation * Vector3.up) < 0)
-                    {
-                        Debug.Log("Hit at back of the current DetectedPlane");
-                    }
-                    else
-                    {
-                        if (trackableHit.Pose.position.y < minY)
-                        {
-                            minY                  = trackableHit.Pose.position.y;
-                            hitToAssociateWith    = trackableHit;
-                            foundSuchTrackableHit = true;
-                        }
-                    }
-                }
-
-                if (foundSuchTrackableHit)
-                {
-                    var virtualAnchor = hitToAssociateWith.Trackable.CreateAnchor(hitToAssociateWith.Pose);
-                    _environmentVisualizer.transform.parent = virtualAnchor.transform;
-
-                    // create a model for this virtual anchor
-                    var virtualAnchorModel = Instantiate(_vitualAnchorPlanePrefab, hitToAssociateWith.Pose.position,
-                        hitToAssociateWith.Pose.rotation);
-
-                    virtualAnchorModel.transform.parent = virtualAnchor.transform;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Check and update the application lifecycle.
-        /// </summary>
         private void _UpdateApplicationLifecycle()
         {
             // Exit the app when the 'back' button is pressed.
@@ -321,18 +295,11 @@ namespace Msw.Core.Controllers
             }
         }
 
-        /// <summary>
-        /// Actually quit the application.
-        /// </summary>
         private void _DoQuit()
         {
             Application.Quit();
         }
 
-        /// <summary>
-        /// Show an Android toast message.
-        /// </summary>
-        /// <param name="message">Message string to show in the toast.</param>
         private void _ShowAndroidToastMessage(string message)
         {
             AndroidJavaClass  unityPlayer   = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
