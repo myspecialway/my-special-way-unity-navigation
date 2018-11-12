@@ -26,16 +26,12 @@ public class DistanceUpdater : MonoBehaviour
 
     private void CalculateDistance()
     {
-        if (_firstPersonCamera == null || _firstPersonCamera.transform == null || _firstPersonCamera.transform.position == null)
+        if (_firstPersonCamera == null || _firstPersonCamera.transform == null)
         {
             _distanceText.text = "no camera";
             return;
         }
-        if (_distanceText == null || _distanceText.transform == null || _distanceText.transform.position == null)
-        {
-            _distanceText.text = "no text prefab";
-            return;
-        }
+   
         float dist = Vector3.Distance(_distanceText.transform.position, _firstPersonCamera.transform.position);
         int _dis = (int)dist;
         _distanceText.text = $"{_dis} m";
