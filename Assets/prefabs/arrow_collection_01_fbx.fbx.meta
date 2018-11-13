@@ -1,0 +1,258 @@
+fileFormatVersion: 2
+guid: da360fc27d0af412fa8a16b15cc11857
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: Arrow_01
+    100002: Arrow_02
+    100004: Arrow_03
+    100006: Arrow_04
+    100008: Arrow_05
+    100010: Arrow_06
+    100012: Arrow_07
+    100014: Arrow_08
+    100016: Arrow_09
+    100018: Arrow_10
+    100020: Arrow_11
+    100022: Arrow_12
+    100024: Arrow_13
+    100026: Arrow_14
+    100028: Arrow_15
+    100030: Arrow_16
+    100032: Arrow_17
+    100034: Arrow_18
+    100036: Arrow_19
+    100038: Arrow_20
+    100040: Arrow_21
+    100042: Arrow_22
+    100044: Arrow_23
+    100046: Arrow_24
+    100048: Arrow_25
+    100050: Arrow_26
+    100052: Arrow_27
+    100054: Arrow_28
+    100056: Arrow_29
+    100058: Arrow_30
+    100060: //RootNode
+    100062: Box
+    100064: Camera
+    100066: Directional Light
+    100068: Soft Box 01.lxe
+    100070: Texture Group
+    100072: 'Texture Group '
+    400000: Arrow_01
+    400002: Arrow_02
+    400004: Arrow_03
+    400006: Arrow_04
+    400008: Arrow_05
+    400010: Arrow_06
+    400012: Arrow_07
+    400014: Arrow_08
+    400016: Arrow_09
+    400018: Arrow_10
+    400020: Arrow_11
+    400022: Arrow_12
+    400024: Arrow_13
+    400026: Arrow_14
+    400028: Arrow_15
+    400030: Arrow_16
+    400032: Arrow_17
+    400034: Arrow_18
+    400036: Arrow_19
+    400038: Arrow_20
+    400040: Arrow_21
+    400042: Arrow_22
+    400044: Arrow_23
+    400046: Arrow_24
+    400048: Arrow_25
+    400050: Arrow_26
+    400052: Arrow_27
+    400054: Arrow_28
+    400056: Arrow_29
+    400058: Arrow_30
+    400060: //RootNode
+    400062: Box
+    400064: Camera
+    400066: Directional Light
+    400068: Soft Box 01.lxe
+    400070: Texture Group
+    400072: 'Texture Group '
+    2000000: Camera
+    2100000: Arrows
+    2100002: Plain
+    2300000: Arrow_01
+    2300002: Arrow_02
+    2300004: Arrow_03
+    2300006: Arrow_04
+    2300008: Arrow_05
+    2300010: Arrow_06
+    2300012: Arrow_07
+    2300014: Arrow_08
+    2300016: Arrow_09
+    2300018: Arrow_10
+    2300020: Arrow_11
+    2300022: Arrow_12
+    2300024: Arrow_13
+    2300026: Arrow_14
+    2300028: Arrow_15
+    2300030: Arrow_16
+    2300032: Arrow_17
+    2300034: Arrow_18
+    2300036: Arrow_19
+    2300038: Arrow_20
+    2300040: Arrow_21
+    2300042: Arrow_22
+    2300044: Arrow_23
+    2300046: Arrow_24
+    2300048: Arrow_25
+    2300050: Arrow_26
+    2300052: Arrow_27
+    2300054: Arrow_28
+    2300056: Arrow_29
+    2300058: Arrow_30
+    2300060: Box
+    3300000: Arrow_01
+    3300002: Arrow_02
+    3300004: Arrow_03
+    3300006: Arrow_04
+    3300008: Arrow_05
+    3300010: Arrow_06
+    3300012: Arrow_07
+    3300014: Arrow_08
+    3300016: Arrow_09
+    3300018: Arrow_10
+    3300020: Arrow_11
+    3300022: Arrow_12
+    3300024: Arrow_13
+    3300026: Arrow_14
+    3300028: Arrow_15
+    3300030: Arrow_16
+    3300032: Arrow_17
+    3300034: Arrow_18
+    3300036: Arrow_19
+    3300038: Arrow_20
+    3300040: Arrow_21
+    3300042: Arrow_22
+    3300044: Arrow_23
+    3300046: Arrow_24
+    3300048: Arrow_25
+    3300050: Arrow_26
+    3300052: Arrow_27
+    3300054: Arrow_28
+    3300056: Arrow_29
+    3300058: Arrow_30
+    3300060: Box
+    4300000: Arrow_01
+    4300002: Arrow_02
+    4300004: Arrow_04
+    4300006: Arrow_03
+    4300008: Arrow_05
+    4300010: Arrow_06
+    4300012: Arrow_07
+    4300014: Arrow_08
+    4300016: Arrow_09
+    4300018: Arrow_11
+    4300020: Arrow_10
+    4300022: Arrow_12
+    4300024: Arrow_13
+    4300026: Arrow_14
+    4300028: Arrow_15
+    4300030: Arrow_16
+    4300032: Arrow_17
+    4300034: Arrow_21
+    4300036: Arrow_18
+    4300038: Arrow_19
+    4300040: Arrow_20
+    4300042: Arrow_22
+    4300044: Arrow_23
+    4300046: Arrow_24
+    4300048: Arrow_25
+    4300050: Arrow_26
+    4300052: Arrow_27
+    4300054: Arrow_28
+    4300056: Arrow_29
+    4300058: Arrow_30
+    4300060: Box
+    10800000: Directional Light
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
