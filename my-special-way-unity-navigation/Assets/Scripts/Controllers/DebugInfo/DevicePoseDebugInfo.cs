@@ -6,7 +6,7 @@ using GoogleARCore;
 
 namespace Msw.Core.Controllers.DebugInfo
 {
-    public class DevicePoseInfo : DebugInfoBase
+    public class DevicePoseDebugInfo : DebugInfoBase
     {
         protected virtual void Update()
         {
