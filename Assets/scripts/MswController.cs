@@ -7,13 +7,6 @@ namespace Msw.Core.Controllers
     using System.Collections.Generic;
     using System;
 
-#if UNITY_EDITOR
-    // Set up touch input propagation while using Instant Preview in the editor.
-    using Input = GoogleARCore.InstantPreviewInput;
-    using UnityEngine.UI;
-
-#endif
-
     public class MswController : MonoBehaviour
     {
         /// <summary>
@@ -71,7 +64,7 @@ namespace Msw.Core.Controllers
 
         protected virtual void Update()
         {
-            _UpdateApplicationLifecycle();
+        //    _UpdateApplicationLifecycle();
            
             // update sample counter text
             _sampleCounterText.text = $"{_sampleCount} samples";
@@ -258,11 +251,11 @@ namespace Msw.Core.Controllers
 
         private void _UpdateApplicationLifecycle()
         {
-            // Exit the app when the 'back' button is pressed.
-            if (Input.GetKey(KeyCode.Escape))
-            {
-                Application.Quit();
-            }
+            //// Exit the app when the 'back' button is pressed.
+            //if (Input.GetKey(KeyCode.Escape))
+            //{
+            //    Application.Quit();
+            //}
 
             // Only allow the screen to sleep when not tracking.
             if (Session.Status != SessionStatus.Tracking)

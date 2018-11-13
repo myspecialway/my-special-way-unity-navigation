@@ -30,8 +30,11 @@ public class SceneScreenNavigator : MonoBehaviour {
         Debug.Log("LoadScene(" + sceneName + ") called.");
         if (!string.IsNullOrEmpty(sceneName))
         {
+            Debug.Log("loading scene");
             SceneManager.LoadScene(sceneName);
         } else {
+            Debug.Log("quit app");
+
             Application.Quit();
         }
     }
@@ -42,6 +45,9 @@ public class SceneScreenNavigator : MonoBehaviour {
     }
     public void LoadSceneOne()
     {
+
+        Debug.Log("loading scene ONE");
+
         SceneManager.LoadScene(1);
     }
 }
