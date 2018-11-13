@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class ProximityFader : MonoBehaviour {
 
-    [SerializeField] private TextMesh _distanceText;
+    [SerializeField] private TextMeshPro _distanceText;
     [SerializeField] private GameObject _fromGameObject;
     private Camera _firstPersonCamera;
 

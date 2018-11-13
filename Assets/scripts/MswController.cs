@@ -64,9 +64,6 @@ namespace Msw.Core.Controllers
 
         protected virtual void Update()
         {
-        //    _UpdateApplicationLifecycle();
-           
-            // update sample counter text
             _sampleCounterText.text = $"{_sampleCount} samples";
 
             Session.GetTrackables<DetectedPlane>(_allDetectedPlanes, TrackableQueryFilter.All);
@@ -151,14 +148,6 @@ namespace Msw.Core.Controllers
 
                             if (foundSuchTrackableHit)
                             {
-//                                _environmentVisualizer = Instantiate(_environmentVisualizerPrefab, hitToAssociateWith.Pose.position, hitToAssociateWith.Pose.rotation);
-
-//                                var pose = augmentedImage.CenterPose;
-//                                var pos  = pose.position;
-//                                var rot  = pose.rotation;
-//                                
-//                                _environmentVisualizer = Instantiate(_environmentVisualizerPrefab, pos, rot);
-
                                 // calculate median value for augmented image position and rotation
                                 var midIndex = (int)(_positionAggregator.Count / 2);
 
@@ -173,9 +162,6 @@ namespace Msw.Core.Controllers
                                 _environmentVisualizer.transform.parent = initialAnchor.transform;
 
                                 _fitToScanOverlay.SetActive(false);
-
-                          //     InvokeRepeating(nameof(CreateVirtualAnchor), 1.0f, 1.0f);
-
                             }
                         }
                     }
@@ -199,118 +185,68 @@ namespace Msw.Core.Controllers
             }
         }
 
-
-
-        //private void CreateVirtualAnchor()
+        //private void _UpdateApplicationLifecycle()
         //{
-        //    if (_environmentVisualizer == null)
+        //    //// Exit the app when the 'back' button is pressed.
+        //    //if (Input.GetKey(KeyCode.Escape))
+        //    //{
+        //    //    Application.Quit();
+        //    //}
+
+        //    // Only allow the screen to sleep when not tracking.
+        //    if (Session.Status != SessionStatus.Tracking)
+        //    {
+        //        const int lostTrackingSleepTimeout = 15;
+        //        Screen.sleepTimeout = lostTrackingSleepTimeout;
+        //    }
+        //    else
+        //    {
+        //        Screen.sleepTimeout = SleepTimeout.NeverSleep;
+        //    }
+
+        //    if (_isQuitting)
         //    {
         //        return;
         //    }
-        //    var trackableHits = new List<TrackableHit>();
-        //    const TrackableHitFlags raycastFilter = TrackableHitFlags.PlaneWithinPolygon |
-        //                                            TrackableHitFlags.FeaturePointWithSurfaceNormal;
-        //    var didHitSomething = Frame.RaycastAll(_firstPersonCamera.transform.position,
-        //        _firstPersonCamera.transform.forward, trackableHits, Mathf.Infinity, raycastFilter);
-        //    if (didHitSomething)
+
+        //    // Quit if ARCore was unable to connect and give Unity some time for the toast to appear.
+        //    if (Session.Status == SessionStatus.ErrorPermissionNotGranted)
         //    {
-        //        var minY = Mathf.Infinity;
-        //        var hitToAssociateWith    = new TrackableHit(); // with minimal 'y'
-        //        var foundSuchTrackableHit = false;
-        //        foreach (var trackableHit in trackableHits)
-        //        {
-        //            // Use hit pose and camera pose to check if hittest is from the
-        //            // back of the plane, if it is, no need to create the anchor.
-        //            if ((trackableHit.Trackable is DetectedPlane) &&
-        //                Vector3.Dot(_firstPersonCamera.transform.position - trackableHit.Pose.position,
-        //                    trackableHit.Pose.rotation * Vector3.up) < 0)
-        //            {
-        //                Debug.Log("Hit at back of the current DetectedPlane");
-        //            }
-        //            else
-        //            {
-        //                if (trackableHit.Pose.position.y < minY)
-        //                {
-        //                    minY                  = trackableHit.Pose.position.y;
-        //                    hitToAssociateWith    = trackableHit;
-        //                    foundSuchTrackableHit = true;
-        //                }
-        //            }
-        //        }
-        //        if (foundSuchTrackableHit)
-        //        {
-        //            var virtualAnchor = hitToAssociateWith.Trackable.CreateAnchor(hitToAssociateWith.Pose);
-        //            _environmentVisualizer.transform.parent = virtualAnchor.transform;
-        //            // create a model for this virtual anchor
-        //            var virtualAnchorModel = Instantiate(_vitualAnchorPlanePrefab, hitToAssociateWith.Pose.position,
-        //                hitToAssociateWith.Pose.rotation);
-        //            virtualAnchorModel.transform.parent = virtualAnchor.transform;
-        //        }
+        //        _ShowAndroidToastMessage("Camera permission is needed to run this application.");
+        //        _isQuitting = true;
+        //        Invoke("_DoQuit", 0.5f);
+        //    }
+        //    else if (Session.Status.IsError())
+        //    {
+        //        _ShowAndroidToastMessage("ARCore encountered a problem connecting.  Please start the app again.");
+        //        _isQuitting = true;
+        //        Invoke("_DoQuit", 0.5f);
         //    }
         //}
 
-        private void _UpdateApplicationLifecycle()
-        {
-            //// Exit the app when the 'back' button is pressed.
-            //if (Input.GetKey(KeyCode.Escape))
-            //{
-            //    Application.Quit();
-            //}
+        //private void _DoQuit()
+        //{
+        //    Application.Quit();
+        //}
 
-            // Only allow the screen to sleep when not tracking.
-            if (Session.Status != SessionStatus.Tracking)
-            {
-                const int lostTrackingSleepTimeout = 15;
-                Screen.sleepTimeout = lostTrackingSleepTimeout;
-            }
-            else
-            {
-                Screen.sleepTimeout = SleepTimeout.NeverSleep;
-            }
+        //private void _ShowAndroidToastMessage(string message)
+        //{
+        //    AndroidJavaClass  unityPlayer   = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+        //    AndroidJavaObject unityActivity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
 
-            if (_isQuitting)
-            {
-                return;
-            }
-
-            // Quit if ARCore was unable to connect and give Unity some time for the toast to appear.
-            if (Session.Status == SessionStatus.ErrorPermissionNotGranted)
-            {
-                _ShowAndroidToastMessage("Camera permission is needed to run this application.");
-                _isQuitting = true;
-                Invoke("_DoQuit", 0.5f);
-            }
-            else if (Session.Status.IsError())
-            {
-                _ShowAndroidToastMessage("ARCore encountered a problem connecting.  Please start the app again.");
-                _isQuitting = true;
-                Invoke("_DoQuit", 0.5f);
-            }
-        }
-
-        private void _DoQuit()
-        {
-            Application.Quit();
-        }
-
-        private void _ShowAndroidToastMessage(string message)
-        {
-            AndroidJavaClass  unityPlayer   = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
-            AndroidJavaObject unityActivity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
-
-            if (unityActivity != null)
-            {
-                AndroidJavaClass toastClass = new AndroidJavaClass("android.widget.Toast");
-                unityActivity.Call("runOnUiThread", new AndroidJavaRunnable(() =>
-                                                                            {
-                                                                                AndroidJavaObject toastObject =
-                                                                                    toastClass
-                                                                                       .CallStatic<AndroidJavaObject>(
-                                                                                            "makeText", unityActivity,
-                                                                                            message,    0);
-                                                                                toastObject.Call("show");
-                                                                            }));
-            }
-        }
+        //    if (unityActivity != null)
+        //    {
+        //        AndroidJavaClass toastClass = new AndroidJavaClass("android.widget.Toast");
+        //        unityActivity.Call("runOnUiThread", new AndroidJavaRunnable(() =>
+        //                                                                    {
+        //                                                                        AndroidJavaObject toastObject =
+        //                                                                            toastClass
+        //                                                                               .CallStatic<AndroidJavaObject>(
+        //                                                                                    "makeText", unityActivity,
+        //                                                                                    message,    0);
+        //                                                                        toastObject.Call("show");
+        //                                                                    }));
+        //    }
+        //}
     }
 }
