@@ -44,11 +44,6 @@ namespace Msw.Core.Controllers
 
         private GameObject _environmentVisualizer = null;
 
-        /// <summary>
-        /// A model to place when a raycast from a user touch hits a plane.
-        /// </summary>
-        [SerializeField] private GameObject _vitualAnchorPlanePrefab;
-
         [SerializeField] private TextMeshProUGUI _sampleCounterText;
         
         private List<Vector3> _positionAggregator = new List<Vector3>();
@@ -79,7 +74,7 @@ namespace Msw.Core.Controllers
                 }
             }
 
-            _searchingForPlaneUI.SetActive(showSearchingUI);
+          //  _searchingForPlaneUI.SetActive(showSearchingUI);
 
             if (!showSearchingUI)
             {
@@ -172,7 +167,7 @@ namespace Msw.Core.Controllers
                     _fitToScanOverlay.SetActive(true);
                 }
             }
-            // probably lost tracking at all
+            // in case of lost tracking
             else
             {
                 _fitToScanOverlay.SetActive(true);
@@ -184,69 +179,5 @@ namespace Msw.Core.Controllers
                 }
             }
         }
-
-        //private void _UpdateApplicationLifecycle()
-        //{
-        //    //// Exit the app when the 'back' button is pressed.
-        //    //if (Input.GetKey(KeyCode.Escape))
-        //    //{
-        //    //    Application.Quit();
-        //    //}
-
-        //    // Only allow the screen to sleep when not tracking.
-        //    if (Session.Status != SessionStatus.Tracking)
-        //    {
-        //        const int lostTrackingSleepTimeout = 15;
-        //        Screen.sleepTimeout = lostTrackingSleepTimeout;
-        //    }
-        //    else
-        //    {
-        //        Screen.sleepTimeout = SleepTimeout.NeverSleep;
-        //    }
-
-        //    if (_isQuitting)
-        //    {
-        //        return;
-        //    }
-
-        //    // Quit if ARCore was unable to connect and give Unity some time for the toast to appear.
-        //    if (Session.Status == SessionStatus.ErrorPermissionNotGranted)
-        //    {
-        //        _ShowAndroidToastMessage("Camera permission is needed to run this application.");
-        //        _isQuitting = true;
-        //        Invoke("_DoQuit", 0.5f);
-        //    }
-        //    else if (Session.Status.IsError())
-        //    {
-        //        _ShowAndroidToastMessage("ARCore encountered a problem connecting.  Please start the app again.");
-        //        _isQuitting = true;
-        //        Invoke("_DoQuit", 0.5f);
-        //    }
-        //}
-
-        //private void _DoQuit()
-        //{
-        //    Application.Quit();
-        //}
-
-        //private void _ShowAndroidToastMessage(string message)
-        //{
-        //    AndroidJavaClass  unityPlayer   = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
-        //    AndroidJavaObject unityActivity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
-
-        //    if (unityActivity != null)
-        //    {
-        //        AndroidJavaClass toastClass = new AndroidJavaClass("android.widget.Toast");
-        //        unityActivity.Call("runOnUiThread", new AndroidJavaRunnable(() =>
-        //                                                                    {
-        //                                                                        AndroidJavaObject toastObject =
-        //                                                                            toastClass
-        //                                                                               .CallStatic<AndroidJavaObject>(
-        //                                                                                    "makeText", unityActivity,
-        //                                                                                    message,    0);
-        //                                                                        toastObject.Call("show");
-        //                                                                    }));
-        //    }
-        //}
     }
 }
