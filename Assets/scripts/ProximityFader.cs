@@ -40,15 +40,15 @@ public class ProximityFader : MonoBehaviour {
     private void updateArrowTransparency(int dis){
         if (dis > 10)
         {
-            updateArrow(1.0f);
+            updateArrow(0.7f);
         }
         if (dis < 10 && dis > 6)
         {
-            updateArrow(0.7f);
+            updateArrow(0.4f);
         }
         if (dis < 6 && dis > 3)
         {
-            updateArrow(0.4f);
+            updateArrow(0.1f);
         }
         if (dis < 3 && dis > 0)
         {
@@ -64,7 +64,7 @@ public class ProximityFader : MonoBehaviour {
         Component[] renderers = this.GetComponentsInChildren(typeof(Renderer));
         foreach (Renderer curRenderer in renderers)
         {
-            Color color = new Color(1.0f, 1.0f, 1.0f, f);
+            Color color = new Color(1.0f, 0.0f, 0.0f, f);
             foreach (Material material in curRenderer.materials)
             {
                 material.color = color;
