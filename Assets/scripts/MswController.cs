@@ -5,7 +5,6 @@ namespace Msw.Core.Controllers
     using GoogleARCore;
     using UnityEngine;
     using System.Collections.Generic;
-    using System;
 
     public class MswController : MonoBehaviour
     {
@@ -18,11 +17,6 @@ namespace Msw.Core.Controllers
         /// The overlay containing the fit to scan user guide.
         /// </summary>
         [SerializeField] private GameObject _fitToScanOverlay;
-
-        /// <summary>
-        /// True if the app is in the process of quitting due to an ARCore connection error, otherwise false.
-        /// </summary>
-        private bool _isQuitting = false;
 
         /// <summary>
         /// A list to hold all planes ARCore is tracking in the current frame. This object is used across
@@ -40,7 +34,7 @@ namespace Msw.Core.Controllers
         private GameObject _environmentVisualizer = null;
 
         [SerializeField] private TextMeshProUGUI _sampleCounterText;
-        
+
         private List<Vector3> _positionAggregator = new List<Vector3>();
         private List<Vector3> _rotationAggregator = new List<Vector3>();
 
@@ -48,9 +42,9 @@ namespace Msw.Core.Controllers
         private int _sampleCount = 0;
         private bool _didCollectEnoughSamples = false;
 
-        protected virtual void Awake(){}
+        protected virtual void Awake() { }
 
-        protected virtual void Start(){}
+        protected virtual void Start() { }
 
         protected virtual void Update()
         {
@@ -76,7 +70,7 @@ namespace Msw.Core.Controllers
                 foreach (var augmentedImage in _tempAugmentedImages)
                 {
                     if (augmentedImage.TrackingState == TrackingState.Tracking &&
-                        _environmentVisualizer       == null)
+                        _environmentVisualizer == null)
                     {
 
                         if (!_didCollectEnoughSamples)
@@ -97,7 +91,7 @@ namespace Msw.Core.Controllers
                         {
                             _sampleCounterText.gameObject.SetActive(false);
                         }
-                        
+
                         var trackableHits = new List<TrackableHit>();
 
                         const TrackableHitFlags raycastFilter = TrackableHitFlags.PlaneWithinPolygon |
@@ -110,7 +104,7 @@ namespace Msw.Core.Controllers
                         {
                             var minY = Mathf.Infinity;
 
-                            var hitToAssociateWith    = new TrackableHit(); // with minimal 'y'
+                            var hitToAssociateWith = new TrackableHit(); // with minimal 'y'
                             var foundSuchTrackableHit = false;
 
                             foreach (var trackableHit in trackableHits)
@@ -127,8 +121,8 @@ namespace Msw.Core.Controllers
                                 {
                                     if (trackableHit.Pose.position.y < minY)
                                     {
-                                        minY                  = trackableHit.Pose.position.y;
-                                        hitToAssociateWith    = trackableHit;
+                                        minY = trackableHit.Pose.position.y;
+                                        hitToAssociateWith = trackableHit;
                                         foundSuchTrackableHit = true;
                                     }
                                 }
@@ -143,9 +137,10 @@ namespace Msw.Core.Controllers
                                 var rotMedian = _rotationAggregator[midIndex];
 
                                 var rot = Quaternion.Euler(rotMedian);
-                                rot.SetLookRotation(new Vector3(90f, 0f, 0f), Vector3.up);
+                                rot.SetLookRotation(new Vector3(-90f, 0f, 0f), Vector3.up);
                                 _environmentVisualizer = Instantiate(_environmentVisualizerPrefab, poseMedian, rot);
-
+                                setPath1Visibility(false);
+                                setPath2Visibility(false);
                                 var initialAnchor = hitToAssociateWith.Trackable.CreateAnchor(hitToAssociateWith.Pose);
                                 _environmentVisualizer.transform.parent = initialAnchor.transform;
 
@@ -170,6 +165,49 @@ namespace Msw.Core.Controllers
                     Destroy(_environmentVisualizer);
                     _environmentVisualizer = null;
                 }
+            }
+
+            // If the player has not touched the screen, we are done with this update.
+            Touch touch;
+            if (Input.touchCount < 1 || (touch = Input.GetTouch(0)).phase != TouchPhase.Began)
+            {
+                return;
+            }
+
+            // Raycast against the location the user touched to search for objects.
+            RaycastHit hit;
+            Ray ray = _firstPersonCamera.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out hit))
+            {
+                Transform objectHit = hit.transform;
+                if (objectHit.gameObject.name.Contains("close shop"))
+                {
+                    setPath1Visibility(true);
+                }
+                if (objectHit.gameObject.name.Contains("Far Destination Shop"))
+                {
+                    setPath1Visibility(false);
+                    setPath2Visibility(true);
+                }
+            }
+        }
+
+        private void setPath1Visibility(bool visible){
+            Transform navigation = _environmentVisualizer.transform.Find("Navigation");
+            if (navigation != null)
+            {
+                Transform path = navigation.Find("Navigate from start to D");
+                path.gameObject.SetActive(visible);
+            }
+        }
+
+        private void setPath2Visibility(bool visible)
+        {
+            Transform navigation = _environmentVisualizer.transform.Find("Navigation");
+            if (navigation != null)
+            {
+                Transform path = navigation.Find("Navigate from D to B");
+                path.gameObject.SetActive(visible);
             }
         }
     }

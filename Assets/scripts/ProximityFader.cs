@@ -33,26 +33,15 @@ public class ProximityFader : MonoBehaviour {
         int _distanceFromNavigationTarget = (int)(distanceFromNavigationTarget * 3.37f);
         int _distanceFromArrow = (int)(distanceFromArrow * 3.37f);
 
-        updateArrowTransparency(_distanceFromArrow);
+        updateArrowVisibility(_distanceFromArrow);
         updateText(_distanceFromNavigationTarget);
     }
 
-    private void updateArrowTransparency(int dis){
-        if (dis > 10)
+    private void updateArrowVisibility(int dis){
+
+        if (dis < 6)
         {
-            updateArrow(0.7f);
-        }
-        if (dis < 10 && dis > 6)
-        {
-            updateArrow(0.4f);
-        }
-        if (dis < 6 && dis > 3)
-        {
-            updateArrow(0.1f);
-        }
-        if (dis < 3 && dis > 0)
-        {
-            updateArrow(0.0f);
+            hideArrow();
         }
     }
 
@@ -60,15 +49,11 @@ public class ProximityFader : MonoBehaviour {
         _distanceText.text = $"{dis}ft";
     }
 
-    private void updateArrow(float f){
-        Component[] renderers = this.GetComponentsInChildren(typeof(Renderer));
-        foreach (Renderer curRenderer in renderers)
+    private void hideArrow(){
+        var objects = this.GetComponentsInChildren(typeof(GameObject));
+        foreach (Component curGameObject in objects)
         {
-            Color color = new Color(1.0f, 0.0f, 0.0f, f);
-            foreach (Material material in curRenderer.materials)
-            {
-                material.color = color;
-            }
+            curGameObject.gameObject.SetActive(false);
         }
     }
 }

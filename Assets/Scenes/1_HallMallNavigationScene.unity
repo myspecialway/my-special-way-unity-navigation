@@ -156,7 +156,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _firstPersonCamera: {fileID: 732595307}
   _fitToScanOverlay: {fileID: 1875535411}
-  _searchingForPlaneUI: {fileID: 1875535412}
   _environmentVisualizerPrefab: {fileID: 1881747155520942, guid: ac8aee735281143298e9053bfd7db1ab,
     type: 2}
   _sampleCounterText: {fileID: 1875535413}
@@ -841,11 +840,6 @@ Prefab:
 --- !u!1 &1875535411 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1258818018184672, guid: d2ff36391d2f04d40baf71f94e8a8720,
-    type: 2}
-  m_PrefabInternal: {fileID: 1875535410}
---- !u!1 &1875535412 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1239610773625892, guid: d2ff36391d2f04d40baf71f94e8a8720,
     type: 2}
   m_PrefabInternal: {fileID: 1875535410}
 --- !u!114 &1875535413 stripped
