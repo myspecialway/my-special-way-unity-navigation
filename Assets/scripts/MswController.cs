@@ -20,11 +20,6 @@ namespace Msw.Core.Controllers
         [SerializeField] private GameObject _fitToScanOverlay;
 
         /// <summary>
-        /// A gameobject parenting UI for displaying the "searching for planes" snackbar.
-        /// </summary>
-        [SerializeField] private GameObject _searchingForPlaneUI;
-
-        /// <summary>
         /// True if the app is in the process of quitting due to an ARCore connection error, otherwise false.
         /// </summary>
         private bool _isQuitting = false;
@@ -73,8 +68,6 @@ namespace Msw.Core.Controllers
                     break;
                 }
             }
-
-          //  _searchingForPlaneUI.SetActive(showSearchingUI);
 
             if (!showSearchingUI)
             {
