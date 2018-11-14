@@ -32,25 +32,28 @@ public class ProximityFader : MonoBehaviour {
 
         int _distanceFromNavigationTarget = (int)(distanceFromNavigationTarget * 3.37f);
         int _distanceFromArrow = (int)(distanceFromArrow * 3.37f);
-        if (_distanceFromArrow > 10) {
+
+        updateArrowTransparency(_distanceFromArrow);
+        updateText(_distanceFromNavigationTarget);
+    }
+
+    private void updateArrowTransparency(int dis){
+        if (dis > 10)
+        {
             updateArrow(1.0f);
-        } 
-        if (_distanceFromArrow < 10 && _distanceFromArrow > 6) {
+        }
+        if (dis < 10 && dis > 6)
+        {
             updateArrow(0.7f);
         }
-        if (_distanceFromArrow < 6 && _distanceFromArrow > 3)
+        if (dis < 6 && dis > 3)
         {
             updateArrow(0.4f);
         }
-        if (_distanceFromArrow < 3 && _distanceFromArrow > 0)
-        {
-            updateArrow(0.2f);
-        }
-        if (_distanceFromArrow == 0)
+        if (dis < 3 && dis > 0)
         {
             updateArrow(0.0f);
         }
-        updateText(_distanceFromNavigationTarget);
     }
 
     private void updateText(int dis){
@@ -67,6 +70,5 @@ public class ProximityFader : MonoBehaviour {
                 material.color = color;
             }
         }
-        // this.GetComponent<MeshRenderer>().material.color = new Color(f, f, f, f);
     }
 }
