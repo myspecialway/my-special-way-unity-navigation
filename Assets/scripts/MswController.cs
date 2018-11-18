@@ -31,6 +31,13 @@ namespace Msw.Core.Controllers
         /// </summary>
         [SerializeField] private GameObject _environmentVisualizerPrefab;
 
+        /// <summary>
+        /// A textholder for navigation instructions (distance).
+        /// </summary>
+        [SerializeField] private TextMeshProUGUI _distanceText;
+
+        private GameObject destination;
+
         private GameObject _environmentVisualizer = null;
 
         [SerializeField] private TextMeshProUGUI _sampleCounterText;
@@ -41,6 +48,7 @@ namespace Msw.Core.Controllers
         private const int RequiredSampleCount = 10;
         private int _sampleCount = 0;
         private bool _didCollectEnoughSamples = false;
+        private string destinationName;
 
         protected virtual void Awake() { }
 
@@ -167,9 +175,10 @@ namespace Msw.Core.Controllers
                 }
             }
 
+            CalculateDistance();
             // If the player has not touched the screen, we are done with this update.
-            Touch touch;
-            if (Input.touchCount < 1 || (touch = Input.GetTouch(0)).phase != TouchPhase.Began)
+
+            if (Input.touchCount < 1 || (Input.GetTouch(0)).phase != TouchPhase.Began)
             {
                 return;
             }
@@ -197,7 +206,14 @@ namespace Msw.Core.Controllers
             if (navigation != null)
             {
                 Transform path = navigation.Find("Navigate from start to D");
+
                 path.gameObject.SetActive(visible);
+                destinationName = "Nike";
+                Transform hall = _environmentVisualizer.transform.Find("Entrance hall");
+                if (hall != null)
+                {
+                    destination = hall.Find("NikeStore").gameObject;
+                }
             }
         }
 
@@ -207,7 +223,37 @@ namespace Msw.Core.Controllers
             if (navigation != null)
             {
                 Transform path = navigation.Find("Navigate from D to B");
+
                 path.gameObject.SetActive(visible);
+                destinationName = "Adidas";
+
+                Transform hall = _environmentVisualizer.transform.Find("Entrance hall");
+                if (hall != null)
+                {
+                    destination = hall.Find("AdidasStore").gameObject;
+                }
+            }
+        }
+
+        private void CalculateDistance()
+        {
+            if (_firstPersonCamera == null || _firstPersonCamera.transform == null)
+            {
+                _distanceText.text = "no camera";
+                return;
+            }
+
+            if (_distanceText == null)
+            {
+                _distanceText.text = "Select destination";
+                return;
+            }
+
+            if (destination != null && _firstPersonCamera != null)
+            {
+                float dist = Vector3.Distance(destination.transform.position, _firstPersonCamera.transform.position);
+                int _distance = (int)(dist * 3.37f);
+                _distanceText.text = $"{destinationName} Store - {_distance}ft";
             }
         }
     }
