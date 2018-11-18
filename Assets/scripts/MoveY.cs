@@ -5,8 +5,7 @@ using UnityEngine;
 public class MoveY : MonoBehaviour
 {
     // Update is called once per frame
-    void Update()
-    {
+    void Update(){
         if (transform.localPosition.z < -1f)
         {
             transform.localPosition = Vector3.zero;

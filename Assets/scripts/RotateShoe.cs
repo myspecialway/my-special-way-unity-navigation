@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RotateShoe : MonoBehaviour {
 
-    public int speed;
+    public float speed;
 
 	// Use this for initialization
 	void Start () {
