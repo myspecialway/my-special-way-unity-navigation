@@ -33,7 +33,7 @@ public class DistanceUpdater : MonoBehaviour
         }
    
         float dist = Vector3.Distance(_distanceText.transform.position, _firstPersonCamera.transform.position);
-        int _dis = (int)dist;
-        _distanceText.text = $"{_dis} m";
+        int _distance = (int)(dist * 3.37f);
+        _distanceText.text = $"{_distance} ft";
     }
 }
