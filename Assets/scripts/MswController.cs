@@ -19,6 +19,11 @@ namespace Msw.Core.Controllers
         [SerializeField] private GameObject _fitToScanOverlay;
 
         /// <summary>
+        /// The overlay containing the footer managing the navigation.
+        /// </summary>
+        [SerializeField] private GameObject _duringNavigation;
+
+        /// <summary>
         /// A list to hold all planes ARCore is tracking in the current frame. This object is used across
         /// the application to avoid per-frame allocations.
         /// </summary>
@@ -191,14 +196,21 @@ namespace Msw.Core.Controllers
                 Transform objectHit = hit.transform;
                 if (objectHit.gameObject.name.Contains("close shop"))
                 {
+                    showFooter();
                     setPath1Visibility(true);
+                    setPath2Visibility(false);
                 }
                 if (objectHit.gameObject.name.Contains("Far Destination Shop"))
                 {
+                    showFooter();
                     setPath1Visibility(false);
                     setPath2Visibility(true);
                 }
             }
+        }
+
+        private void showFooter(){
+            _duringNavigation.SetActive(true);
         }
 
         private void setPath1Visibility(bool visible){
