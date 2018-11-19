@@ -220,11 +220,14 @@ namespace Msw.Core.Controllers
                 Transform path = navigation.Find("Navigate from start to D");
 
                 path.gameObject.SetActive(visible);
-                destinationName = "Nike";
-                Transform hall = _environmentVisualizer.transform.Find("Entrance hall");
-                if (hall != null)
+                if (visible == true)
                 {
-                    destination = hall.Find("NikeStore").gameObject;
+                    destinationName = "Nike";
+                    Transform hall = _environmentVisualizer.transform.Find("Entrance hall");
+                    if (hall != null)
+                    {
+                        destination = hall.Find("NikeStore").gameObject;
+                    }
                 }
             }
         }
@@ -237,12 +240,15 @@ namespace Msw.Core.Controllers
                 Transform path = navigation.Find("Navigate from D to B");
 
                 path.gameObject.SetActive(visible);
-                destinationName = "Adidas";
-
-                Transform hall = _environmentVisualizer.transform.Find("Entrance hall");
-                if (hall != null)
+                if (visible == true)
                 {
-                    destination = hall.Find("AdidasStore").gameObject;
+                    destinationName = "Adidas";
+
+                    Transform hall = _environmentVisualizer.transform.Find("Entrance hall");
+                    if (hall != null)
+                    {
+                        destination = hall.Find("AdidasStore").gameObject;
+                    }
                 }
             }
         }
