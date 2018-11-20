@@ -50,4 +50,11 @@ public class SceneScreenNavigator : MonoBehaviour {
 
         SceneManager.LoadScene(1);
     }
+    public void LoadSceneTwo()
+    {
+
+        Debug.Log("loading scene TWO");
+
+        SceneManager.LoadScene(2);
+    }
 }

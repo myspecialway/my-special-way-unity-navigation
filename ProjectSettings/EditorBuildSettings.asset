@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/1_HallMallNavigationScene.unity
     guid: 7c0f3268055051a479b18ae02a37516b
+  - enabled: 1
+    path: Assets/Scenes/2_Coupon.unity
+    guid: 8e00d9f8533684c8ca8411397f4306e8
   m_configObjects: {}

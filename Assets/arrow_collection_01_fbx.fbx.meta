@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: da360fc27d0af412fa8a16b15cc11857
+guid: e784b74d640b742c2aa6a0b502e9be75
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
@@ -179,7 +179,7 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Arrows
-    second: {fileID: 2100000, guid: 91ae1b57eaf034d65a86aaf9fd08db04, type: 2}
+    second: {fileID: 2100000, guid: ddc7d8b95cd3a440da85d3f27e707b9e, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
