@@ -5,6 +5,8 @@ namespace Msw.Core.Controllers
     using GoogleARCore;
     using UnityEngine;
     using System.Collections.Generic;
+    using System.Linq;
+    using System;
 
     public class MswController : MonoBehaviour
     {
@@ -78,6 +80,7 @@ namespace Msw.Core.Controllers
 
             if (!showSearchingUI)
             {
+
                 Session.GetTrackables(_tempAugmentedImages, TrackableQueryFilter.Updated);
 
                 foreach (var augmentedImage in _tempAugmentedImages)
@@ -143,11 +146,16 @@ namespace Msw.Core.Controllers
 
                             if (foundSuchTrackableHit)
                             {
-                                // calculate median value for augmented image position and rotation
-                                var midIndex = (int)(_positionAggregator.Count / 2);
+                                
 
-                                var poseMedian = _positionAggregator[midIndex];
-                                var rotMedian = _rotationAggregator[midIndex];
+                                // calculate median value for augmented image position and rotation
+                                //var midIndex = (int)(_positionAggregator.Count / 2);
+
+                                //var poseMedian = _positionAggregator[midIndex];
+                                //var rotMedian = _rotationAggregator[midIndex];
+
+                                var poseMedian = CalculateStdDev(_positionAggregator);
+                                var rotMedian = CalculateStdDev(_rotationAggregator);
 
                                 var rot = Quaternion.Euler(rotMedian);
                                 rot.SetLookRotation(new Vector3(-90f, 0f, 0f), Vector3.up);
@@ -158,7 +166,7 @@ namespace Msw.Core.Controllers
                                 _environmentVisualizer.transform.parent = initialAnchor.transform;
 
                                 _fitToScanOverlay.SetActive(false);
-                            }
+                            } 
                         }
                     }
                 }
@@ -166,13 +174,14 @@ namespace Msw.Core.Controllers
                 if (_environmentVisualizer == null)
                 {
                     _fitToScanOverlay.SetActive(true);
+                   
                 }
             }
             // in case of lost tracking
             else
             {
                 _fitToScanOverlay.SetActive(true);
-
+                _didCollectEnoughSamples = false;
                 if (_environmentVisualizer != null)
                 {
                     Destroy(_environmentVisualizer);
@@ -231,6 +240,61 @@ namespace Msw.Core.Controllers
                 }
             }
         }
+
+        private List<float> getX(List<Vector3> arr){
+            List<float> res = new List<float>();
+            for (int i = 0; i < 10; i++)
+            {
+                res.Append(arr[i].x);
+            }
+            return res;
+        }
+
+        private List<float> getZ(List<Vector3> arr)
+        {
+            List<float> res = new List<float>();
+            for (int i = 0; i < 10; i++)
+            {
+                res.Append(arr[i].z);
+            }
+            return res;
+        }
+
+        private List<float> getY(List<Vector3> arr)
+        {
+            List<float> res = new List<float>();
+            for (int i = 0; i < 10; i++)
+            {
+                res.Append(arr[i].y);
+            }
+            return res;
+        }
+
+        private float CalculateStdDevDouble(List<float> values)
+        {
+            float ret = 0;
+            if (values.Count() > 0)
+            {
+                //Compute the Average      
+                double avg = values.Average();
+                //Perform the Sum of (value-avg)_2_2      
+                double sum = values.Sum(d => Math.Pow(d - avg, 2));
+                //Put it all together      
+                ret = (float)(Math.Sqrt((sum) / (values.Count() - 1)));
+            }
+            return ret;
+        }
+
+        private Vector3 CalculateStdDev(List<Vector3> values){
+            Vector3 res;
+
+            res.x = CalculateStdDevDouble(getX(values));
+            res.y = CalculateStdDevDouble(getY(values));
+            res.z = CalculateStdDevDouble(getY(values));
+
+            return res;
+        }
+
 
         private void setPath2Visibility(bool visible)
         {
