@@ -7,13 +7,13 @@ public class MoveZ : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (transform.localPosition.z < -1f)
+        if (transform.localPosition.z < -1.0f)
         {
             transform.localPosition = Vector3.zero;
         }
         else
         {
-            transform.Translate(0, 0, -Time.deltaTime);
+            transform.Translate(0,0,-Time.deltaTime);
         }
     }
 }
