@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using GoogleARCore;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Msw.Core.Controllers
 {
@@ -42,6 +43,7 @@ namespace Msw.Core.Controllers
         [SerializeField] private int _delayBeforeNavigationToNike;
 
         private bool _positioned;
+        private bool _completedNavigation;
         private bool _tracking;
         private bool _firstUpdate = true;
         private bool _goingToAdidas;
@@ -77,7 +79,7 @@ namespace Msw.Core.Controllers
 
             if (_tracking)
             {
-                if (!_guidingLineGreen.activeSelf)
+                if (_guidingLineYellow.activeSelf)
                 {
                     _guidingLineYellow.SetActive(false);
                     _guidingLineGreen.SetActive(true);
@@ -116,8 +118,20 @@ namespace Msw.Core.Controllers
                 {
                     _navigateToAdidas.SetActive(false);
                     SetPath2Visibility(true);
+                    StartCoroutine(CompletedNavigation());
+                }
+
+                if (_completedNavigation)
+                {
+                    SceneManager.LoadScene(2);
                 }
             }
+        }
+
+        IEnumerator CompletedNavigation()
+        {
+            yield return new WaitForSeconds(_delayBeforeNavigationToNike);
+            _completedNavigation = true;
         }
 
         private void CalculateDistance()

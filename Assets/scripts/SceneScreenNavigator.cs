@@ -5,11 +5,6 @@ public class SceneScreenNavigator : MonoBehaviour {
 
     public string m_BackButtonNavigation = "[Name of Scene To Load]";
 
-    void Start()
-    {
-
-    }
-
     void Update()
     {
         if (Input.GetKeyUp(KeyCode.Escape))
@@ -52,7 +47,6 @@ public class SceneScreenNavigator : MonoBehaviour {
     }
     public void LoadSceneTwo()
     {
-
         Debug.Log("loading scene TWO");
 
         SceneManager.LoadScene(2);
