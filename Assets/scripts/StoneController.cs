@@ -28,34 +28,26 @@ namespace Msw.Core.Controllers
         ///    /// <summary>
         /// The overlay containing the footer managing the navigation.
         /// </summary>
-        [SerializeField] private GameObject _duringNavigation;
         [SerializeField] private TextMeshProUGUI _distanceText;
-        
         [SerializeField] private GameObject _environmentVisualizerPrefab;
-        
-        [SerializeField] private GameObject _navigateToNike;
-        
-        [SerializeField] private GameObject _navigateToAdidas;
-
+        [SerializeField] private GameObject _navigationMenu;
         [SerializeField] private GameObject _guidingLineYellow;
         [SerializeField] private GameObject _guidingLineGreen;
-        
-        [SerializeField] private int _delayBeforeNavigationToNike;
+        [SerializeField] private int _delayBeforeNavigationCompleted;
 
         private bool _positioned;
         private bool _completedNavigation;
         private bool _tracking;
         private bool _firstUpdate = true;
         private bool _goingToAdidas;
+        private bool _goingToNike = true;
         private string _destinationName;
         private GameObject _destination;
-
         private GameObject _environmentVisualizer;
 
         private void Init()
         {
             _guidingLineYellow.SetActive(true);
-            _duringNavigation.SetActive(false);
             _firstUpdate = false;
         }
         
@@ -68,9 +60,9 @@ namespace Msw.Core.Controllers
             
             Session.GetTrackables(_allDetectedPlanes);
 
-            foreach (var t in _allDetectedPlanes)
+            foreach (var plane in _allDetectedPlanes)
             {
-                if (t.TrackingState == TrackingState.Tracking)
+                if (plane.TrackingState == TrackingState.Tracking)
                 {
                     _tracking = true;
                     break;
@@ -98,7 +90,6 @@ namespace Msw.Core.Controllers
                 {
                     DeployAugmentation();
                     RemoveGuidingLine();
-                    StartCoroutine(TriggerNavigationToNike());
                 }
             }
             else
@@ -109,29 +100,43 @@ namespace Msw.Core.Controllers
                     CalculateDistance();
                     return;
                 }
-                if (_navigateToNike.activeSelf)
-                {
-                    HideNikeNotification();
-                    SetPath1Visibility(true);
-                }
-                if (_navigateToAdidas.activeSelf)
-                {
-                    _navigateToAdidas.SetActive(false);
-                    SetPath2Visibility(true);
-                    StartCoroutine(CompletedNavigation());
-                }
 
-                if (_completedNavigation)
+                if (_navigationMenu.activeSelf)
                 {
-                    SceneManager.LoadScene(2);
+                    _navigationMenu.SetActive(false);
+                    if (_goingToNike)
+                    {
+                        SetPath1Visibility(true);
+                        SetPath2Visibility(false);
+                    }
+
+                    if (_goingToAdidas)
+                    {
+                        SetPath1Visibility(false);
+                        SetPath2Visibility(true);
+                        StartCoroutine(CompletedNavigationToAdidas());
+                    }
+                }
+                else
+                {
+                    if (!_completedNavigation)
+                    {
+                        _navigationMenu.SetActive(true);
+                    }
+                    else
+                    {
+                        SceneManager.LoadScene(2);
+                    }
                 }
             }
         }
 
-        IEnumerator CompletedNavigation()
+        IEnumerator CompletedNavigationToAdidas()
         {
-            yield return new WaitForSeconds(_delayBeforeNavigationToNike);
+            yield return new WaitForSeconds(_delayBeforeNavigationCompleted);
             _completedNavigation = true;
+            _goingToAdidas = false;
+            _goingToNike = false;
         }
 
         private void CalculateDistance()
@@ -154,31 +159,26 @@ namespace Msw.Core.Controllers
                 int distance = (int)(dist * 3.37f);
                 _distanceText.text = $"{_destinationName} Store - {distance}ft";
 
-                if (dist < 3)
+                if (dist < 4)
                 {
-                    if (!_goingToAdidas)
+                    SetPath1Visibility(false);
+                    SetPath2Visibility(false);
+                    _distanceText.text = "Click to Navigate";
+
+                    if (_goingToAdidas)
                     {
+                        _goingToAdidas = false;
+                        _destination = null;
+                    }
+
+                    if (_goingToNike)
+                    {
+                        _goingToNike = false;
                         _goingToAdidas = true;
-                        SetPath1Visibility(false);
-                        _duringNavigation.SetActive(false);
-                        StartCoroutine(TriggerNavigationToAdidas());
+                        _destination = null;
                     }
                 }
             }
-        }
-
-        IEnumerator TriggerNavigationToAdidas()
-        {
-            yield return new WaitForSeconds(_delayBeforeNavigationToNike);
-            ShowAdidasNotification();
-            _duringNavigation.SetActive(true);
-        }
-        
-        IEnumerator TriggerNavigationToNike()
-        {
-            yield return new WaitForSeconds(_delayBeforeNavigationToNike);
-            ShowNikeNotification();
-            _duringNavigation.SetActive(true);
         }
 
         private void RemoveGuidingLine()
@@ -187,26 +187,6 @@ namespace Msw.Core.Controllers
             _guidingLineGreen.SetActive(false);
         }
 
-        public void HideNikeNotification()
-        {
-            _navigateToNike.SetActive(false);
-        }
-        
-        public void HideAdidasNotification()
-        {
-            _navigateToAdidas.SetActive(false);
-        }
-        
-        public void ShowNikeNotification()
-        {
-            _navigateToNike.SetActive(true);
-        }
-
-        private void ShowAdidasNotification()
-        {
-            _navigateToAdidas.SetActive(true);
-        }
-        
         private void PositionAugmentation()
         {
             var poseStart = new Vector3(0, 0, 0);
