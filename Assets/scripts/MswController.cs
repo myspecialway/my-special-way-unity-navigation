@@ -43,8 +43,6 @@ namespace Msw.Core.Controllers
         /// </summary>
         [SerializeField] private TextMeshProUGUI _distanceText;
 
-        private GameObject destination;
-
         private GameObject _environmentVisualizer = null;
 
         [SerializeField] private TextMeshProUGUI _sampleCounterText;
@@ -53,15 +51,12 @@ namespace Msw.Core.Controllers
         private List<Vector3> _rotationAggregator = new List<Vector3>();
 
         private const int RequiredSampleCount = 10;
-        private int _sampleCount = 0;
-        private bool _didCollectEnoughSamples = false;
+        private int _sampleCount;
+        private bool _didCollectEnoughSamples;
         private string destinationName;
+        private GameObject destination;
 
-        protected virtual void Awake() { }
-
-        protected virtual void Start() { }
-
-        protected virtual void Update()
+        protected void Update()
         {
             _sampleCounterText.text = $"{_sampleCount} samples";
 
@@ -294,7 +289,6 @@ namespace Msw.Core.Controllers
 
             return res;
         }
-
 
         private void setPath2Visibility(bool visible)
         {

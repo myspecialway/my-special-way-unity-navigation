@@ -6,6 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Placing without image.unity
+    path: Assets/Scenes/0_StartScene.unity
+    guid: 677cebfab18f24137beb100d0afb7b94
+  - enabled: 1
+    path: Assets/Scenes/1_HallMallNavigationScene.unity
     guid: 6e18c092651c74682adac5f12e780db4
+  - enabled: 1
+    path: Assets/Scenes/2_Coupon.unity
+    guid: 8e00d9f8533684c8ca8411397f4306e8
   m_configObjects: {}
