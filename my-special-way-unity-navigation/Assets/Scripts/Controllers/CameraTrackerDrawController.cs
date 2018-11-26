@@ -1,8 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Net.NetworkInformation;
 using GoogleARCore;
 using GoogleARCoreInternal;
+using Msw.Core.Controllers.Jobs;
+using Unity.Jobs;
 using UnityEngine;
+using UnityEngine.Jobs;
 
 namespace Msw.Core.Controllers
 {
@@ -22,6 +26,8 @@ namespace Msw.Core.Controllers
 
         [SerializeField] private Transform _cameraTrajectoryRoot;
 
+        [SerializeField] private float _distanceBetweenNodes;
+
         /// <summary>
         /// The rotation in degrees need to apply to model when the arrow model is placed.
         /// </summary>
@@ -37,22 +43,89 @@ namespace Msw.Core.Controllers
             //
         }
 
-        protected virtual void Start()
-        {
-            //InvokeRepeating(nameof(CreateCameraTrajectoryNode), 1.0f, 1.0f);
-        }
 
         public static int NodeCounter = 0;
 
         public static Vector3 FloorPosition = Vector3.zero;
         
+        // Jobs
+        private TransformAccessArray _transforms;
+        private SnapNodeToFloorJob _snapNodesToFloorJob;
+        private JobHandle _snapNodesToFloorJobHandle;
+
+        protected virtual void OnDisable()
+        {
+            _snapNodesToFloorJobHandle.Complete();
+            _transforms.Dispose();
+        }
+        
+        // Jobs
+        
+        protected virtual void Start()
+        {
+            //InvokeRepeating(nameof(CreateCameraTrajectoryNode), 1.0f, 1.0f);
+            
+            _transforms = new TransformAccessArray(0, -1);
+        }
+        
         protected virtual void Update()
         {
+            // Jobs
+            
+            _snapNodesToFloorJobHandle.Complete();
+            
+            
+            // Jobs
+            
+            
             _UpdateApplicationLifecycle();
 
             FloorPosition = TryFindFloorPlanePosition();
 //            FloorPosition = TryFindLowestFeaturePointPosition();
+//            CreateNodeOnAnyTouch();
+
+            AutoGenerateRoute();
             
+            // Jobs
+
+            _snapNodesToFloorJob = new SnapNodeToFloorJob()
+            {
+                FloorHeight = FloorPosition.y,
+                VecticalOffset = 0.01f
+            };
+
+            _snapNodesToFloorJobHandle = _snapNodesToFloorJob.Schedule(_transforms);
+            JobHandle.ScheduleBatchedJobs();
+
+            // Jobs
+        }
+
+        private List<Vector3> _nodes;
+        private Vector3 _lastNode = Vector3.zero;
+
+        private void AutoGenerateRoute()
+        {
+            // Jobs
+            _snapNodesToFloorJobHandle.Complete();
+            // Jobs
+            
+            var currentNode = Frame.Pose.position;
+
+//            if (_lastNode == Vector3.zero)
+//            {
+//                _lastNode = currentNode;
+//                return;
+//            }
+
+            if (Vector3.Distance(currentNode, _lastNode) >= _distanceBetweenNodes)
+            {
+                _lastNode = currentNode;
+                CreateCameraTrajectoryNode();
+            }
+        }
+
+        private void CreateNodeOnAnyTouch()//(Delegate @delegate)
+        {
             // If the player has not touched the screen, we are done with this update.
             Touch touch;
             if (Input.touchCount < 1 || (touch = Input.GetTouch(0)).phase != TouchPhase.Began)
@@ -63,42 +136,42 @@ namespace Msw.Core.Controllers
             CreateCameraTrajectoryNode();
         }
 
-        private static Vector3 TryFindLowestFeaturePointPosition()
-        {
-            var featurePoints = new List<FeaturePoint>();
-            
-            Session.GetTrackables<FeaturePoint>(featurePoints, TrackableQueryFilter.All);
-
-            FeaturePoint lowestFeaturePoint = null;
-
-            var pos            = Frame.Pose.position;
-            var currentDeviceY = pos.y;
-
-            var minY = Mathf.Infinity;
-
-            for (int i = 0; i < featurePoints.Count; i++)
-            {
-                var featurePoint = featurePoints[i];
-                if (featurePoint.TrackingState == TrackingState.Tracking/* &&
-                    featurePoint.OrientationMode == FeaturePointOrientationMode.SurfaceNormal*/)
-                {
-                    var detectedFeaturePointY = featurePoint.Pose.position.y;
-
-                    if (detectedFeaturePointY <= minY)
-                    {
-                        minY = detectedFeaturePointY;
-                        lowestFeaturePoint  = featurePoint;
-                    }
-                }
-            }
-
-            if (lowestFeaturePoint != null)
-            {
-                return lowestFeaturePoint.Pose.position;
-            }
-
-            return Vector3.zero;
-        }
+//        private static Vector3 TryFindLowestFeaturePointPosition()
+//        {
+//            var featurePoints = new List<FeaturePoint>();
+//            
+//            Session.GetTrackables<FeaturePoint>(featurePoints, TrackableQueryFilter.All);
+//
+//            FeaturePoint lowestFeaturePoint = null;
+//
+//            var pos            = Frame.Pose.position;
+//            var currentDeviceY = pos.y;
+//
+//            var minY = Mathf.Infinity;
+//
+//            for (int i = 0; i < featurePoints.Count; i++)
+//            {
+//                var featurePoint = featurePoints[i];
+//                if (featurePoint.TrackingState == TrackingState.Tracking/* &&
+//                    featurePoint.OrientationMode == FeaturePointOrientationMode.SurfaceNormal*/)
+//                {
+//                    var detectedFeaturePointY = featurePoint.Pose.position.y;
+//
+//                    if (detectedFeaturePointY <= minY)
+//                    {
+//                        minY = detectedFeaturePointY;
+//                        lowestFeaturePoint  = featurePoint;
+//                    }
+//                }
+//            }
+//
+//            if (lowestFeaturePoint != null)
+//            {
+//                return lowestFeaturePoint.Pose.position;
+//            }
+//
+//            return Vector3.zero;
+//        }
 
         private static Vector3 TryFindFloorPlanePosition()
         {
@@ -184,6 +257,11 @@ namespace Msw.Core.Controllers
             var arrowNode = Instantiate(_arrowPrefab, arrowPos, camRot);
             arrowNode.transform.parent = _cameraTrajectoryRoot;
             arrowNode.transform.Rotate(0, k_ModelRotation, 0, Space.Self);
+            
+            // Jobs
+            _transforms.Add(trajectoryNode.transform);
+            _transforms.Add(arrowNode.transform);
+            // Jobs
         }
 
         /// <summary>

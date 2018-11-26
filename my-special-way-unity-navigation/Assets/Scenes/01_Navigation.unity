@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1927,7 +1927,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 448, y: 1418.8}
+  m_AnchoredPosition: {x: 437, y: 1180}
   m_SizeDelta: {x: 500, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1286636607
@@ -2062,6 +2062,7 @@ MonoBehaviour:
   _arrowPrefab: {fileID: 1143327448474504, guid: d7a02c5f5f4e04244bcf5aeed0f5372b,
     type: 2}
   _cameraTrajectoryRoot: {fileID: 1135531704}
+  _distanceBetweenNodes: 1
 --- !u!1 &1630190860
 GameObject:
   m_ObjectHideFlags: 0
