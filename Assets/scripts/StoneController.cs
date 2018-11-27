@@ -1,42 +1,27 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using GoogleARCore;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace Msw.Core.Controllers
 {
     public class StoneController : MonoBehaviour
     {
-        /// <summary>
-        /// The first-person camera being used to render the passthrough camera image (i.e. AR background).
-        /// </summary>
         [SerializeField] private Camera _firstPersonCamera;
-        /// <summary>
-        /// A list to hold all planes ARCore is tracking in the current frame. This object is used across
-        /// the application to avoid per-frame allocations.
-        /// </summary>
-        private readonly List<DetectedPlane> _allDetectedPlanes = new List<DetectedPlane>();
-        /// <summary>
-        /// A prefab for visualizing an environment.
-        /// </summary>
-        ///
-        ///         /// <summary>
-        /// A textholder for navigation instructions (distance).
-        /// </summary>
-        ///    /// <summary>
-        /// The overlay containing the footer managing the navigation.
-        /// </summary>
+
+
         [SerializeField] private TextMeshProUGUI _distanceText;
         [SerializeField] private GameObject _environmentVisualizerPrefab;
         [SerializeField] private GameObject _navigationMenu;
-        [SerializeField] private GameObject _guidingLineYellow;
-        [SerializeField] private GameObject _guidingLineGreen;
-        [SerializeField] private int _delayBeforeNavigationCompleted;
+        [SerializeField] private GameObject _tapToPlaceModel;
+        [SerializeField] private GameObject _startUpScan;
+        [SerializeField] private GameObject _afterScanApp;
+        [SerializeField] private GameObject _duringAr;
+        [SerializeField] private GameObject _coupons;
+
+        private readonly List<DetectedPlane> _allDetectedPlanes = new List<DetectedPlane>();
 
         private bool _positioned;
-        private bool _completedNavigation;
         private bool _tracking;
         private bool _firstUpdate = true;
         private bool _goingToAdidas;
@@ -44,10 +29,11 @@ namespace Msw.Core.Controllers
         private string _destinationName;
         private GameObject _destination;
         private GameObject _environmentVisualizer;
+        
 
         private void Init()
         {
-            _guidingLineYellow.SetActive(true);
+            _startUpScan.SetActive(true); 
             _firstUpdate = false;
         }
         
@@ -69,76 +55,93 @@ namespace Msw.Core.Controllers
                 }
             }
 
-            if (_tracking)
+            if (_tracking && !_positioned)
             {
-                if (_guidingLineYellow.activeSelf)
+                if (_tapToPlaceModel != null && !_tapToPlaceModel.activeSelf)
                 {
-                    _guidingLineYellow.SetActive(false);
-                    _guidingLineGreen.SetActive(true);
+                    _tapToPlaceModel.SetActive(true);
                 }
             }
             
-            if (!_positioned)
+            if (_positioned)
             {
-                // if user did not touched the display, finish the update
-                if (Input.touchCount < 1 || Input.GetTouch(0).phase != TouchPhase.Began)
-                {
-                    return;
-                }
+                CalculateDistance();
+            }
 
-                if (_tracking)
+            
+            Touch touch;
+            if (Input.touchCount > 0 && (touch = Input.GetTouch(0)).phase == TouchPhase.Began)
+            {
+                var point = Camera.main.ScreenToWorldPoint(touch.position);
+
+                RaycastHit hit;
+                if (Physics.Raycast(point, Camera.main.transform.forward, out hit))
                 {
-                    DeployAugmentation();
-                    RemoveGuidingLine();
+                    if (hit.transform.tag.Equals("Coupon"))
+                    {
+                        _coupons.SetActive(true);
+                        _duringAr.SetActive(false);
+                    }
                 }
+            }
+        }
+
+        public void MoveToDemo()
+        {
+            _afterScanApp.SetActive(false);
+            _duringAr.SetActive(true);
+            _navigationMenu.SetActive(true);
+        }
+        
+        public void TapToScan()
+        {
+            _startUpScan.SetActive(false);
+            _afterScanApp.SetActive(true);
+            DeployAugmentation();
+        }
+        
+        public void CancelNavigationMenu()
+        {
+            SetPath1Visibility(false);
+            SetPath2Visibility(false);
+            _navigationMenu.SetActive(false);
+            _destination = null;
+        }
+        
+        public void ToggleNavigationMenu()
+        {
+            SetPath1Visibility(false);
+            SetPath2Visibility(false);
+            if (_navigationMenu.activeSelf)
+            {
+                _navigationMenu.SetActive(false);
             }
             else
             {
-                // if user did not touched the display, finish the update
-                if (Input.touchCount < 1 || Input.GetTouch(0).phase != TouchPhase.Began)
-                {
-                    CalculateDistance();
-                    return;
-                }
-
-                if (_navigationMenu.activeSelf)
-                {
-                    _navigationMenu.SetActive(false);
-                    if (_goingToNike)
-                    {
-                        SetPath1Visibility(true);
-                        SetPath2Visibility(false);
-                    }
-
-                    if (_goingToAdidas)
-                    {
-                        SetPath1Visibility(false);
-                        SetPath2Visibility(true);
-                        StartCoroutine(CompletedNavigationToAdidas());
-                    }
-                }
-                else
-                {
-                    if (!_completedNavigation)
-                    {
-                        _navigationMenu.SetActive(true);
-                    }
-                    else
-                    {
-                        SceneManager.LoadScene(2);
-                    }
-                }
+                _navigationMenu.SetActive(true);
             }
         }
 
-        IEnumerator CompletedNavigationToAdidas()
+        public void CloseCoupons()
         {
-            yield return new WaitForSeconds(_delayBeforeNavigationCompleted);
-            _completedNavigation = true;
-            _goingToAdidas = false;
-            _goingToNike = false;
+            _coupons.SetActive(false);
+            _duringAr.SetActive(true);
         }
-
+        
+        public void NavigateToNike()
+        {
+            SetPath1Visibility(true);
+            SetPath2Visibility(false);
+            _navigationMenu.SetActive(false);
+        }
+        
+        public void NavigateToAdidas()
+        {
+            SetPath1Visibility(false);
+            SetPath2Visibility(true);
+            _navigationMenu.SetActive(false);
+        }
+        
         private void CalculateDistance()
         {
             if (_firstPersonCamera == null || _firstPersonCamera.transform == null)
@@ -168,6 +171,7 @@ namespace Msw.Core.Controllers
                     if (_goingToAdidas)
                     {
                         _goingToAdidas = false;
+                        _goingToNike = false;
                         _destination = null;
                     }
 
@@ -179,12 +183,6 @@ namespace Msw.Core.Controllers
                     }
                 }
             }
-        }
-
-        private void RemoveGuidingLine()
-        {
-            _guidingLineYellow.SetActive(false);
-            _guidingLineGreen.SetActive(false);
         }
 
         private void PositionAugmentation()
