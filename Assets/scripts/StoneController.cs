@@ -127,6 +127,12 @@ namespace Msw.Core.Controllers
             _coupons.SetActive(false);
             _duringAr.SetActive(true);
         }
+
+        public void BackToMainScreen()
+        {
+            _duringAr.SetActive(false);
+            _afterScanApp.SetActive(true);
+        }
         
         public void NavigateToNike()
         {
