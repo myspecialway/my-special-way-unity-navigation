@@ -30,32 +30,51 @@ namespace Msw.Core.Controllers
         private GameObject _destination;
         private GameObject _environmentVisualizer;
         
+        public static Vector3 FloorPosition = Vector3.zero;
+        
 
         private void Init()
         {
             _startUpScan.SetActive(true); 
             _firstUpdate = false;
         }
-        
+
         protected void Update()
         {
             if (_firstUpdate)
             {
                 Init();
             }
-            
-            Session.GetTrackables(_allDetectedPlanes);
 
-            foreach (var plane in _allDetectedPlanes)
+            FloorPosition = TryFindFloorPlanePosition();
+
+            if (_environmentVisualizerPrefab != null)
             {
-                if (plane.TrackingState == TrackingState.Tracking)
-                {
-                    _tracking = true;
-                    break;
-                }
+                var pos = _environmentVisualizerPrefab.transform.position;
+                pos.y = FloorPosition.y;
+                _environmentVisualizerPrefab.transform.position = pos;
+            }
+            if (FloorPosition != Vector3.zero)
+            {
+                _tracking = true;
+            }
+            else
+            {
+                return;
             }
 
-            if (_tracking && !_positioned)
+//            Session.GetTrackables(_allDetectedPlanes);
+//
+//            foreach (var plane in _allDetectedPlanes)
+//            {
+//                if (plane.TrackingState == TrackingState.Tracking)
+//                {
+//                    _tracking = true;
+//                    break;
+//                }
+//            }
+
+        if (_tracking && !_positioned)
             {
                 if (_tapToPlaceModel != null && !_tapToPlaceModel.activeSelf)
                 {
@@ -193,11 +212,15 @@ namespace Msw.Core.Controllers
 
         private void PositionAugmentation()
         {
-            var poseStart = new Vector3(0, 0, 0);
+//            var poseStart = new Vector3(0, 0, 0);
+            var poseStart = Frame.Pose.position;
+
             var rotation = Frame.Pose.rotation;
             var rot = rotation.eulerAngles;
             rot.z = 0f;
             rot.x = 0f;
+            poseStart.y = FloorPosition.y;
+            
             var rot1 = Quaternion.Euler(rot);
             _environmentVisualizer =
                 Instantiate(_environmentVisualizerPrefab, poseStart, rot1);
@@ -256,6 +279,48 @@ namespace Msw.Core.Controllers
                     }
                 }
             }
+        }
+        
+        private static Vector3 TryFindFloorPlanePosition()
+        {
+            List<DetectedPlane> allPlanes = new List<DetectedPlane>();
+
+            // Hide snackbar when currently tracking at least one plane.
+            Session.GetTrackables<DetectedPlane>(allPlanes);
+
+            DetectedPlane floorDetectedPlane = null;
+
+            var pos            = Frame.Pose.position;
+            var currentDeviceY = pos.y;
+
+            var minY = Mathf.Infinity;
+
+//            bool showSearchingUI = true;
+            for (int i = 0; i < allPlanes.Count; i++)
+            {
+                var detectedPlane = allPlanes[i];
+                if (detectedPlane.TrackingState == TrackingState.Tracking &&
+                    detectedPlane.PlaneType     == DetectedPlaneType.HorizontalUpwardFacing)
+                {
+                    var detectedPlaneY = detectedPlane.CenterPose.position.y;
+
+                    if (detectedPlaneY <= minY)
+                    {
+                        minY = detectedPlaneY;
+                        floorDetectedPlane  = detectedPlane;
+                    }
+
+//                    showSearchingUI = false;
+//                    break;
+                }
+            }
+
+            if (floorDetectedPlane != null)
+            {
+                return floorDetectedPlane.CenterPose.position;
+            }
+
+            return Vector3.zero;
         }
     }
 }
