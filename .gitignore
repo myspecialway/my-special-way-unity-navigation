@@ -56,3 +56,13 @@ Thumbs.db
 *.*~
 *~HEAD
 *.*~*
+Assets/FbxExporters.meta
+Assets/FbxExporters/Editor.meta
+Assets/FbxExporters/Editor/FbxSdk.meta
+Assets/FbxExporters/Editor/FbxSdk/Plugins.meta
+Assets/FbxExporters/Editor/FbxSdk/Plugins/x64.meta
+Assets/FbxExporters/Editor/FbxSdk/Plugins/x64/MacOS.meta
+Assets/FbxExporters/Editor/FbxSdk/Plugins/x64/Windows.meta
+Assets/FbxExporters/Editor/FbxSdk/Plugins/x64/MacOS/UnityFbxSdkNative.bundle.meta
+Assets/FbxExporters/Editor/FbxSdk/Plugins/x64/MacOS/UnityFbxSdkNative.bundle/Contents.meta
+Assets/FbxExporters/Editor/FbxSdk/Plugins/x64/MacOS/UnityFbxSdkNative.bundle/Contents/MacOS.meta
