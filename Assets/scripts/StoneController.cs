@@ -31,11 +31,11 @@ namespace Msw.Core.Controllers
         {
             _floorPosition = TryFindFloorPlanePosition();
 
-            if (_environmentVisualizerPrefab != null)
+            if (_positioned && _environmentVisualizerPrefab != null)
             {
-                var pos = _environmentVisualizerPrefab.transform.position;
+                var pos = _environmentVisualizer.transform.position;
                 pos.y = _floorPosition.y;
-                _environmentVisualizerPrefab.transform.position = pos;
+                _environmentVisualizer.transform.position = pos;
             }
 
             if (_floorPosition != Vector3.zero)
