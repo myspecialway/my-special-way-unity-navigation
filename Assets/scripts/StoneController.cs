@@ -9,7 +9,6 @@ namespace Msw.Core.Controllers
     {
         [SerializeField] private Camera _firstPersonCamera;
 
-
         [SerializeField] private TextMeshProUGUI _distanceText;
         [SerializeField] private GameObject _environmentVisualizerPrefab;
         [SerializeField] private GameObject _navigationMenu;
@@ -19,63 +18,58 @@ namespace Msw.Core.Controllers
         [SerializeField] private GameObject _duringAr;
         [SerializeField] private GameObject _coupons;
 
-        private readonly List<DetectedPlane> _allDetectedPlanes = new List<DetectedPlane>();
-
         private bool _positioned;
         private bool _tracking;
-        private bool _firstUpdate = true;
         private bool _goingToAdidas;
         private bool _goingToNike = true;
         private string _destinationName;
         private GameObject _destination;
         private GameObject _environmentVisualizer;
-        
-
-        private void Init()
-        {
-            _startUpScan.SetActive(true); 
-            _firstUpdate = false;
-        }
-        
+        private Vector3 _floorPosition = Vector3.zero;
+       
         protected void Update()
         {
-            if (_firstUpdate)
-            {
-                Init();
-            }
-            
-            Session.GetTrackables(_allDetectedPlanes);
+            _floorPosition = TryFindFloorPlanePosition();
 
-            foreach (var plane in _allDetectedPlanes)
+            if (_environmentVisualizerPrefab != null)
             {
-                if (plane.TrackingState == TrackingState.Tracking)
-                {
-                    _tracking = true;
-                    break;
-                }
+                var pos = _environmentVisualizerPrefab.transform.position;
+                pos.y = _floorPosition.y;
+                _environmentVisualizerPrefab.transform.position = pos;
+            }
+
+            if (_floorPosition != Vector3.zero)
+            {
+                _tracking = true;
+            }
+            else
+            {
+                return;
             }
 
             if (_tracking && !_positioned)
             {
-                if (_tapToPlaceModel != null && !_tapToPlaceModel.activeSelf)
+                if (!_startUpScan.activeSelf || !_tapToPlaceModel.activeSelf)
                 {
+                    _startUpScan.SetActive(true); 
                     _tapToPlaceModel.SetActive(true);
                 }
             }
-            
-            if (_positioned)
+
+            if (_environmentVisualizerPrefab != null)
             {
                 CalculateDistance();
             }
 
-            
-            Touch touch;
-            if (Input.touchCount > 0 && (touch = Input.GetTouch(0)).phase == TouchPhase.Began)
+            Vector3 touchPosition = Input.mousePosition;
+            Ray ray = Camera.main.ScreenPointToRay(touchPosition);
+            var h = 108;
+            var w = 216;
+            if (Input.mousePosition.x > w && Input.mousePosition.x < 1080 - w && Input.mousePosition.y > h && Input.mousePosition.y < 2160 - h)
             {
-                var point = Camera.main.ScreenToWorldPoint(touch.position);
-
                 RaycastHit hit;
-                if (Physics.Raycast(point, Camera.main.transform.forward, out hit))
+
+                if (Physics.Raycast(ray, out hit))
                 {
                     if (hit.transform.tag.Equals("Coupon"))
                     {
@@ -193,14 +187,17 @@ namespace Msw.Core.Controllers
 
         private void PositionAugmentation()
         {
-            var poseStart = new Vector3(0, 0, 0);
+            var poseStart = Frame.Pose.position;
             var rotation = Frame.Pose.rotation;
             var rot = rotation.eulerAngles;
             rot.z = 0f;
             rot.x = 0f;
+            poseStart.y = _floorPosition.y;
+            
             var rot1 = Quaternion.Euler(rot);
             _environmentVisualizer =
                 Instantiate(_environmentVisualizerPrefab, poseStart, rot1);
+
            SetPath1Visibility(false);
            SetPath2Visibility(false);
             _positioned = true;
@@ -257,5 +254,42 @@ namespace Msw.Core.Controllers
                 }
             }
         }
+        
+                
+        private Vector3 TryFindFloorPlanePosition()
+        {
+            List<DetectedPlane> allPlanes = new List<DetectedPlane>();
+
+            Session.GetTrackables(allPlanes);
+
+            DetectedPlane floorDetectedPlane = null;
+
+            var minY = Mathf.Infinity;
+
+            for (int i = 0; i < allPlanes.Count; i++)
+            {
+                var detectedPlane = allPlanes[i];
+                if (detectedPlane.TrackingState == TrackingState.Tracking &&
+                    detectedPlane.PlaneType     == DetectedPlaneType.HorizontalUpwardFacing)
+                {
+                    var detectedPlaneY = detectedPlane.CenterPose.position.y;
+
+                    if (detectedPlaneY <= minY)
+                    {
+                        minY = detectedPlaneY;
+                        floorDetectedPlane  = detectedPlane;
+                    }
+                }
+            }
+
+            if (floorDetectedPlane != null)
+            {
+                _tracking = true;
+                return floorDetectedPlane.CenterPose.position;
+            }
+
+            return Vector3.zero;
+        }
+
     }
 }
