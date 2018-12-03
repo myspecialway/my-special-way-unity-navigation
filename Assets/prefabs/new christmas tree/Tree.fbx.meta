@@ -1930,7 +1930,17 @@ ModelImporter:
     4300762: l_07_branch_07
     4300764: l_07_branch_01
     2186277476908879412: ImportLogs
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: c t_balls_g balls_standard
+    second: {fileID: 2100000, guid: 4be504274597f4c2695345084357e0eb, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: christmas tree_standard
+    second: {fileID: 2100000, guid: 2cdd88745bfe14b65aab6f0964cf0df7, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
