@@ -17,8 +17,6 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-using System.Collections.Generic;
-
 namespace GoogleARCore.Examples.Common
 {
     using GoogleARCore;
@@ -30,13 +28,10 @@ namespace GoogleARCore.Examples.Common
     public class PointcloudVisualizer : MonoBehaviour
     {
         private const int k_MaxPointCount = 61440;
-//        private const int k_MaxPointCount = int.MaxValue;
 
         private Mesh m_Mesh;
 
-//        private Vector3[] m_Points = new Vector3[k_MaxPointCount];
-        
-        private List<Vector3> _points = new List<Vector3>(k_MaxPointCount);
+        private Vector3[] m_Points = new Vector3[k_MaxPointCount];
 
         /// <summary>
         /// Unity start.
@@ -58,21 +53,18 @@ namespace GoogleARCore.Examples.Common
                 // Copy the point cloud points for mesh verticies.
                 for (int i = 0; i < Frame.PointCloud.PointCount; i++)
                 {
-                    var point = Frame.PointCloud.GetPointAsStruct(i);
-//                    var id = point.Id;
-//                    m_Points[i] = point.Position;
-                    _points.Add(point);
+                    m_Points[i] = Frame.PointCloud.GetPointAsStruct(i);
                 }
 
                 // Update the mesh indicies array.
-                int[] indices = new int[_points.Count];
-                for (int i = 0; i < _points.Count; i++)
+                int[] indices = new int[Frame.PointCloud.PointCount];
+                for (int i = 0; i < Frame.PointCloud.PointCount; i++)
                 {
                     indices[i] = i;
                 }
 
                 m_Mesh.Clear();
-                m_Mesh.vertices = _points.ToArray();
+                m_Mesh.vertices = m_Points;
                 m_Mesh.SetIndices(indices, MeshTopology.Points, 0);
             }
         }

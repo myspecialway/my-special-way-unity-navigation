@@ -24,10 +24,10 @@ namespace GoogleARCore.Examples.HelloAR
     using GoogleARCore;
     using GoogleARCore.Examples.Common;
     using UnityEngine;
+
 #if UNITY_EDITOR
     // Set up touch input propagation while using Instant Preview in the editor.
     using Input = InstantPreviewInput;
-
 #endif
 
     /// <summary>
@@ -107,7 +107,7 @@ namespace GoogleARCore.Examples.HelloAR
             // Raycast against the location the player touched to search for planes.
             TrackableHit hit;
             TrackableHitFlags raycastFilter = TrackableHitFlags.PlaneWithinPolygon |
-                                              TrackableHitFlags.FeaturePointWithSurfaceNormal;
+                TrackableHitFlags.FeaturePointWithSurfaceNormal;
 
             if (Frame.Raycast(touch.position.x, touch.position.y, raycastFilter, out hit))
             {
@@ -204,21 +204,18 @@ namespace GoogleARCore.Examples.HelloAR
         /// <param name="message">Message string to show in the toast.</param>
         private void _ShowAndroidToastMessage(string message)
         {
-            AndroidJavaClass  unityPlayer   = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+            AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
             AndroidJavaObject unityActivity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
 
             if (unityActivity != null)
             {
                 AndroidJavaClass toastClass = new AndroidJavaClass("android.widget.Toast");
                 unityActivity.Call("runOnUiThread", new AndroidJavaRunnable(() =>
-                                                                            {
-                                                                                AndroidJavaObject toastObject =
-                                                                                    toastClass
-                                                                                       .CallStatic<AndroidJavaObject>(
-                                                                                            "makeText", unityActivity,
-                                                                                            message,    0);
-                                                                                toastObject.Call("show");
-                                                                            }));
+                {
+                    AndroidJavaObject toastObject = toastClass.CallStatic<AndroidJavaObject>("makeText", unityActivity,
+                        message, 0);
+                    toastObject.Call("show");
+                }));
             }
         }
     }

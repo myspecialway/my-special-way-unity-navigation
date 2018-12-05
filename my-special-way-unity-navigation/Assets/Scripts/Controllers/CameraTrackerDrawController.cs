@@ -1,15 +1,22 @@
-﻿using System;
+﻿#region Usings
+
 using System.Collections.Generic;
-using System.Net.NetworkInformation;
 using GoogleARCore;
-using GoogleARCoreInternal;
 using Msw.Core.Controllers.Jobs;
 using Unity.Jobs;
 using UnityEngine;
 using UnityEngine.Jobs;
 
+#endregion
+
 namespace Msw.Core.Controllers
 {
+#if UNITY_EDITOR
+    // Set up touch input propagation while using Instant Preview in the editor.
+    using Input = InstantPreviewInput;
+
+#endif
+
     public class CameraTrackerDrawController : MonoBehaviour
     {
         /// <summary>
@@ -17,14 +24,16 @@ namespace Msw.Core.Controllers
         /// </summary>
         [SerializeField] private Camera _firstPersonCamera;
 
-        /// <summary>
-        /// A model to place when a raycast from a user touch hits a plane.
-        /// </summary>
+        [SerializeField] private Transform _cameraTrajectoryRoot;
+        
         [SerializeField] private GameObject _cameraTrajectoryNodePrefab;
 
         [SerializeField] private GameObject _arrowPrefab;
 
-        [SerializeField] private Transform _cameraTrajectoryRoot;
+        [SerializeField] private float _arrowVerticalOffset;
+        
+        [SerializeField] private float _trajectoryNodeVerticalOffset;
+
 
         [SerializeField] private float _distanceBetweenNodes;
 
@@ -43,58 +52,76 @@ namespace Msw.Core.Controllers
             //
         }
 
-
         public static int NodeCounter = 0;
 
         public static Vector3 FloorPosition = Vector3.zero;
-        
+
         // Jobs
-        private TransformAccessArray _transforms;
-        private SnapNodeToFloorJob _snapNodesToFloorJob;
-        private JobHandle _snapNodesToFloorJobHandle;
+        private TransformAccessArray _arrowTransforms;
+        private TransformAccessArray _trajectoryTransforms;
+        
+        private SnapNodeToFloorJob _snapArrowsToFloorJob;
+        private SnapNodeToFloorJob _snapTrajectoriesToFloorJob;
+        
+        private JobHandle _snapArrowsToFloorJobHandle;
+        private JobHandle _snapTrajectoriesToFloorJobHandle;
+
+        private bool _autoGenerateMap = true;
+
+        public void ToggleAutoGenerate()
+        {
+            _autoGenerateMap = !_autoGenerateMap;
+        }
 
         protected virtual void OnDisable()
         {
-            _snapNodesToFloorJobHandle.Complete();
-            _transforms.Dispose();
+            _snapArrowsToFloorJobHandle.Complete();
+            _snapTrajectoriesToFloorJobHandle.Complete();
+            _arrowTransforms.Dispose();
+            _trajectoryTransforms.Dispose();
         }
-        
         // Jobs
-        
+
         protected virtual void Start()
         {
-            //InvokeRepeating(nameof(CreateCameraTrajectoryNode), 1.0f, 1.0f);
-            
-            _transforms = new TransformAccessArray(0, -1);
+            _arrowTransforms = new TransformAccessArray(0, -1);
+            _trajectoryTransforms = new TransformAccessArray(0, -1);
         }
-        
+
         protected virtual void Update()
         {
             // Jobs
-            
-            _snapNodesToFloorJobHandle.Complete();
-            
-            
+            _snapArrowsToFloorJobHandle.Complete();
+            _snapTrajectoriesToFloorJobHandle.Complete();
             // Jobs
-            
-            
+
             _UpdateApplicationLifecycle();
 
             FloorPosition = TryFindFloorPlanePosition();
 //            FloorPosition = TryFindLowestFeaturePointPosition();
 //            CreateNodeOnAnyTouch();
 
-            AutoGenerateRoute();
-            
+            if (_autoGenerateMap)
+            {
+                AutoGenerateRoute();
+            }
+
             // Jobs
 
-            _snapNodesToFloorJob = new SnapNodeToFloorJob()
+            _snapArrowsToFloorJob = new SnapNodeToFloorJob()
             {
                 FloorHeight = FloorPosition.y,
-                VecticalOffset = 0.01f
+                VecticalOffset = _arrowVerticalOffset
+            };
+            
+            _snapTrajectoriesToFloorJob = new SnapNodeToFloorJob()
+            {
+                FloorHeight = FloorPosition.y,
+                VecticalOffset = _trajectoryNodeVerticalOffset
             };
 
-            _snapNodesToFloorJobHandle = _snapNodesToFloorJob.Schedule(_transforms);
+            _snapArrowsToFloorJobHandle = _snapArrowsToFloorJob.Schedule(_arrowTransforms);
+            _snapTrajectoriesToFloorJobHandle = _snapTrajectoriesToFloorJob.Schedule(_trajectoryTransforms);
             JobHandle.ScheduleBatchedJobs();
 
             // Jobs
@@ -106,16 +133,11 @@ namespace Msw.Core.Controllers
         private void AutoGenerateRoute()
         {
             // Jobs
-            _snapNodesToFloorJobHandle.Complete();
+            _snapArrowsToFloorJobHandle.Complete();
+            _snapTrajectoriesToFloorJobHandle.Complete();
             // Jobs
-            
-            var currentNode = Frame.Pose.position;
 
-//            if (_lastNode == Vector3.zero)
-//            {
-//                _lastNode = currentNode;
-//                return;
-//            }
+            var currentNode = Frame.Pose.position;
 
             if (Vector3.Distance(currentNode, _lastNode) >= _distanceBetweenNodes)
             {
@@ -124,7 +146,7 @@ namespace Msw.Core.Controllers
             }
         }
 
-        private void CreateNodeOnAnyTouch()//(Delegate @delegate)
+        private void CreateNodeOnAnyTouch() //(Delegate @delegate)
         {
             // If the player has not touched the screen, we are done with this update.
             Touch touch;
@@ -136,43 +158,6 @@ namespace Msw.Core.Controllers
             CreateCameraTrajectoryNode();
         }
 
-//        private static Vector3 TryFindLowestFeaturePointPosition()
-//        {
-//            var featurePoints = new List<FeaturePoint>();
-//            
-//            Session.GetTrackables<FeaturePoint>(featurePoints, TrackableQueryFilter.All);
-//
-//            FeaturePoint lowestFeaturePoint = null;
-//
-//            var pos            = Frame.Pose.position;
-//            var currentDeviceY = pos.y;
-//
-//            var minY = Mathf.Infinity;
-//
-//            for (int i = 0; i < featurePoints.Count; i++)
-//            {
-//                var featurePoint = featurePoints[i];
-//                if (featurePoint.TrackingState == TrackingState.Tracking/* &&
-//                    featurePoint.OrientationMode == FeaturePointOrientationMode.SurfaceNormal*/)
-//                {
-//                    var detectedFeaturePointY = featurePoint.Pose.position.y;
-//
-//                    if (detectedFeaturePointY <= minY)
-//                    {
-//                        minY = detectedFeaturePointY;
-//                        lowestFeaturePoint  = featurePoint;
-//                    }
-//                }
-//            }
-//
-//            if (lowestFeaturePoint != null)
-//            {
-//                return lowestFeaturePoint.Pose.position;
-//            }
-//
-//            return Vector3.zero;
-//        }
-
         private static Vector3 TryFindFloorPlanePosition()
         {
             List<DetectedPlane> allPlanes = new List<DetectedPlane>();
@@ -182,7 +167,7 @@ namespace Msw.Core.Controllers
 
             DetectedPlane floorDetectedPlane = null;
 
-            var pos            = Frame.Pose.position;
+            var pos = Frame.Pose.position;
             var currentDeviceY = pos.y;
 
             var minY = Mathf.Infinity;
@@ -192,14 +177,14 @@ namespace Msw.Core.Controllers
             {
                 var detectedPlane = allPlanes[i];
                 if (detectedPlane.TrackingState == TrackingState.Tracking &&
-                    detectedPlane.PlaneType     == DetectedPlaneType.HorizontalUpwardFacing)
+                    detectedPlane.PlaneType == DetectedPlaneType.HorizontalUpwardFacing)
                 {
                     var detectedPlaneY = detectedPlane.CenterPose.position.y;
 
                     if (detectedPlaneY <= minY)
                     {
                         minY = detectedPlaneY;
-                        floorDetectedPlane  = detectedPlane;
+                        floorDetectedPlane = detectedPlane;
                     }
 
 //                    showSearchingUI = false;
@@ -218,49 +203,25 @@ namespace Msw.Core.Controllers
 
         private void CreateCameraTrajectoryNode()
         {
-//            var arCorePose = Frame.Pose;
-//
-//            var arCorePos = arCorePose.position;
-//            var arCoreRot = arCorePose.rotation;
-//            
-//            
-//
-//            return;
-
-            var camPos            = _firstPersonCamera.transform.position;
-            var camRot            = _firstPersonCamera.transform.rotation;
+            var camPos = _firstPersonCamera.transform.position;
+            var camRot = _firstPersonCamera.transform.rotation;
             var camRotEulerAngles = camRot.eulerAngles;
             camRotEulerAngles.x = 0;
             camRotEulerAngles.z = 0;
-            camRot              = Quaternion.Euler(camRotEulerAngles);
-
-            // camera node
-            //var camNodePos = camPos + _firstPersonCamera.transform.forward; // TODO think : const height
-            var camNodePos = camPos; // + _firstPersonCamera.transform.forward; // TODO think : const height
-//            camNodePos.y = .0f;      // TODO think : const height
-            var trajectoryNode = Instantiate(_cameraTrajectoryNodePrefab, camNodePos, camRot);
-
+            camRot = Quaternion.Euler(camRotEulerAngles);
+    
+            var trajectoryNode = Instantiate(_cameraTrajectoryNodePrefab, camPos, camRot);
             trajectoryNode.transform.parent = _cameraTrajectoryRoot;
-            var trajectoryNodeController = trajectoryNode.GetComponent<TrajectoryNodeController>();
-            trajectoryNodeController.NodeIdText.text = "Node " + NodeCounter++;
-            var pos = trajectoryNode.transform.position;
-            trajectoryNodeController.NodePositionText.text = $"x {pos.x}\ny {pos.y}\nz {pos.z}";
 
-            // arrow node
-//            var offsetFromCamera = new Vector3(.0f, -1.4f, .0f); // TODO think : const height
-
-//            var arrowPos = new Vector3(camPos.x, camPos.y, camPos.z); // TODO think : const height
-            var arrowPos = new Vector3(camPos.x, FloorPosition.y, camPos.z); // TODO think : floor Y
-//            arrowPos += offsetFromCamera;                          // as an average height // TODO think : const height
-//            arrowPos += _firstPersonCamera.transform.forward;      // to put it in front // TODO think : const height
+            var arrowPos = new Vector3(camPos.x, FloorPosition.y, camPos.z);
 
             var arrowNode = Instantiate(_arrowPrefab, arrowPos, camRot);
             arrowNode.transform.parent = _cameraTrajectoryRoot;
             arrowNode.transform.Rotate(0, k_ModelRotation, 0, Space.Self);
-            
+
             // Jobs
-            _transforms.Add(trajectoryNode.transform);
-            _transforms.Add(arrowNode.transform);
+            _trajectoryTransforms.Add(trajectoryNode.transform);
+            _arrowTransforms.Add(arrowNode.transform);
             // Jobs
         }
 
@@ -320,21 +281,21 @@ namespace Msw.Core.Controllers
         /// <param name="message">Message string to show in the toast.</param>
         private void _ShowAndroidToastMessage(string message)
         {
-            AndroidJavaClass  unityPlayer   = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+            AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
             AndroidJavaObject unityActivity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
 
             if (unityActivity != null)
             {
                 AndroidJavaClass toastClass = new AndroidJavaClass("android.widget.Toast");
                 unityActivity.Call("runOnUiThread", new AndroidJavaRunnable(() =>
-                                                                            {
-                                                                                AndroidJavaObject toastObject =
-                                                                                    toastClass
-                                                                                       .CallStatic<AndroidJavaObject>(
-                                                                                            "makeText", unityActivity,
-                                                                                            message,    0);
-                                                                                toastObject.Call("show");
-                                                                            }));
+                {
+                    AndroidJavaObject toastObject =
+                        toastClass
+                            .CallStatic<AndroidJavaObject>(
+                                "makeText", unityActivity,
+                                message, 0);
+                    toastObject.Call("show");
+                }));
             }
         }
     }

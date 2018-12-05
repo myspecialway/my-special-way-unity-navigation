@@ -15,9 +15,12 @@ EditorBuildSettings:
     path: Assets/GoogleARCore/Examples/HelloAR/Scenes/HelloAR.unity
     guid: e6a6fa04348cb45c9b0221eb19c946da
   - enabled: 0
-    path: Assets/Scenes/MswNavigation_TestScene.unity
+    path: Assets/Scenes/Tests/MswNavigation_TestScene.unity
     guid: dc4b87fbab03a77488bc71abc601c321
-  - enabled: 1
-    path: Assets/Scenes/TrackingImprovements_TestScene.unity
+  - enabled: 0
+    path: Assets/Scenes/Tests/TrackingImprovements_TestScene.unity
     guid: 27c058c97f114fc44987fc1e4ff0e4c7
+  - enabled: 1
+    path: Assets/Scenes/Tests/Wing_A_Floor_3_TestScene.unity
+    guid: 6d24f5c62a8694c2baeb1885222e1867
   m_configObjects: {}
